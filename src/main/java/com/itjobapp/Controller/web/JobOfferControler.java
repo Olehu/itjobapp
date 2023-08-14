@@ -11,10 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @AllArgsConstructor
@@ -60,7 +57,7 @@ public class JobOfferControler {
 
         if (company != null) {
             JobOfferDTO jobOfferDTO = new JobOfferDTO();
-            jobOfferDTO.setCompany(companyMapper.map(company)); // Assuming you have a companyMapper
+            jobOfferDTO.setCompany(companyMapper.map(company));
             model.addAttribute("jobOffer", jobOfferDTO);
             return "joboffer-form";
         } else {
@@ -69,12 +66,29 @@ public class JobOfferControler {
     }
 
     @PostMapping(value ="/joboffer/new")
-    public String createjobOfferDTO(@ModelAttribute("jobOffer") JobOfferDTO jobOfferDTO, BindingResult bindingResult) {
+    public String createjobOfferDTO(
+            @ModelAttribute("jobOffer") JobOfferDTO jobOfferDTO,
+            @RequestParam("companyName") String companyName,
+            BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             log.error("Binding result has errors {}", bindingResult.getAllErrors());
             return "joboffer";
         }
+
+        Company company = companyService.getCompanyByName(companyName);
+        if (company != null) {
+            jobOfferDTO.setCompany(companyMapper.map(company));
+            jobOfferService.createJobOffer(jobOfferMapper.maper(jobOfferDTO));
+        } else {
+            log.error("Company not found");
+            return "error";
+        }
+//        if (jobOfferDTO.getCompany() != null) {
+//            Company company = companyMapper.maper(jobOfferDTO.getCompany());
+//
+//            jobOfferDTO.setCompany(jobOfferDTO.getCompany());
+//        }
 
         jobOfferService.createJobOffer(jobOfferMapper.maper(jobOfferDTO));
         return "redirect:/joboffer";

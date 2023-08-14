@@ -42,4 +42,9 @@ public class CompanyRepository implements CompanyDAO {
         Optional<CompanyEntity> companyEntity = companyJpaRepository.findById(companyId);
         return companyEntity.map(companyEntityMapper::mapFromEntity);
     }
+
+    @Override
+    public Integer findIdByName(Company company) {
+        return companyJpaRepository.findIdByName(company.getCompanyName());
+    }
 }

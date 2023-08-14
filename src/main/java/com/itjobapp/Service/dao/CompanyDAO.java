@@ -15,4 +15,6 @@ public interface CompanyDAO {
     Optional<Company> findByCompanyName(String companyName);
 
     Optional<Company> findById(Integer companyId);
+
+    Integer findIdByName(Company company);
 }

@@ -42,4 +42,8 @@ public class CompanyService {
         return companyDao.findById(companyId)
                 .orElseThrow(() -> new NotFoundException("Company not found"));
     }
+
+    public Integer findIdByName(Company company) {
+        return companyDao.findIdByName(company);
+    }
 }

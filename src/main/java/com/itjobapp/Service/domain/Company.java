@@ -17,4 +17,6 @@ public class Company {
     String email;
     Boolean isHiring;
     Set<JobOffer> jobOffers;
+
+
 }

@@ -32,6 +32,8 @@
             <textarea class="form-control" id="otherRequirements" th:field="*{otherRequirements}" placeholder="Enter other requirements"></textarea>
         </div>
 
+        <input type="hidden" name="companyName" th:value="${jobOffer.company.companyName}" />
+
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
