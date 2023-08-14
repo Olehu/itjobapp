@@ -5,6 +5,7 @@ CREATE TABLE company (
     location VARCHAR(255),
     email VARCHAR(64),
     is_hiring BOOLEAN,
+    unique (company_name),
     PRIMARY KEY (company_id)
 );
 
@@ -19,7 +20,7 @@ CREATE TABLE candidate (
     phone_number VARCHAR(20),
     availability_status BOOLEAN,
     profile_image BYTEA,
-    unique (email)
+    unique (email),
     PRIMARY KEY (candidate_id)
 );
 
@@ -31,9 +32,9 @@ CREATE TABLE job_offer (
     skill VARCHAR(255) NOT NULL,
     experience_level VARCHAR(100),
     other_requirements VARCHAR(255),
-    PRIMARY KEY (job_requirement_id),
+    PRIMARY KEY (job_offer_id),
     CONSTRAINT fk_company_id
         FOREIGN KEY (company_id)
-            REFERENCES company(company_id),
+            REFERENCES company(company_id)
 );
 

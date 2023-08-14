@@ -25,8 +25,8 @@ public class CompanyEntity {
     private String industry;
     @Column(name = "location")
     private String location;
-    @Column(name = "contact_email")
-    private String contactEmail;
+    @Column(name = "email")
+    private String email;
     @Column(name = "is_hiring")
     private Boolean isHiring;
 

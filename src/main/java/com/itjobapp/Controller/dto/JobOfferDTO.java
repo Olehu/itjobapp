@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class JobOfferDTO {
-    Integer jobOfferId;
     String name;
     String experienceLevel;
     String otherRequirements;

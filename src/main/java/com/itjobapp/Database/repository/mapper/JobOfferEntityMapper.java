@@ -13,4 +13,5 @@ public interface JobOfferEntityMapper {
 
     JobOfferEntity mapToEntity(JobOffer JobOffer);
 
+    JobOffer mapFromEntity(JobOfferEntity jobOfferEntity);
 }

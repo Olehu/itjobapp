@@ -6,6 +6,6 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface CandidateMapper {
-    CandidateDTO map(final Candidate candidate)
+    CandidateDTO map(final Candidate candidate);
 
 }

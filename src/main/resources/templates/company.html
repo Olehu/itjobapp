@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+          crossorigin="anonymous">
+    <title>Candidate</title>
+</head>
+
+<body>
+<div class="container">
+    <h1>Company!</h1>
+</div>
+
+<div class="container">
+    <div class="row mt-3">
+        <div class="col-md-4">
+            <a th:href="@{/company/new}" class="btn btn-info" role="button">New Company</a>
+        </div>
+    </div>
+</div>
+
+<br>
+<br>
+
+<div class="container">
+    <div class="row mt-3">
+        <div class="col-md-4">
+            <a th:href="@{/}" class="btn btn-info" role="button">Home</a>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-4">
+    <h2>All Companies</h2>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Company Name</th>
+            <th>Industry</th>
+            <th>Location</th>
+            <th>Contact Email</th>
+            <th>Is Hiring</th>
+            <th>View</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="company : ${companies}">
+            <td th:text="${company.companyName}"></td>
+            <td th:text="${company.industry}"></td>
+            <td th:text="${company.location}"></td>
+            <td th:text="${company.email}"></td>
+            <td th:text="${company.isHiring}"></td>
+            <td><a th:href="@{/company/profile/${company.companyName}}" class="btn btn-primary">View</a></td>
+
+            <td><a th:href="@{'/company/profile/' + company.companyName}">View</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

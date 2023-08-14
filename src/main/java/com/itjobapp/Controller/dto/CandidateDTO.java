@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CandidateDTO {
 
-    Integer candidateId;
     String firstName;
     String lastName;
     String email;

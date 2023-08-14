@@ -1,10 +1,7 @@
 package com.itjobapp.Controller.dto;
 
 import com.itjobapp.Service.domain.JobOffer;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Set;
 
@@ -17,7 +14,7 @@ public class CompanyDTO {
     String companyName;
     String industry;
     String location;
-    String contactEmail;
+    String email;
     Boolean isHiring;
     Set<JobOfferDTO> jobOffers;
 }
