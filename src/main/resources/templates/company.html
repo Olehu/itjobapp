@@ -54,7 +54,7 @@
             <td th:text="${company.location}"></td>
             <td th:text="${company.email}"></td>
             <td th:text="${company.isHiring}"></td>
-            <td><a th:href="@{/company/profile/${company.companyName}}" class="btn btn-primary">View</a></td>
+            <td><a th:href="@{/company/profile/{companyName}(companyName=${company.companyName})}" class="btn btn-primary">View</a></td>
 
             <td><a th:href="@{'/company/profile/' + company.companyName}">View</a></td>
         </tr>

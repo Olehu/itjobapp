@@ -64,12 +64,8 @@ return "company";
         return "redirect:/company";
     }
 
-//    @GetMapping(value = "/company/profile/{companyId}")
-//    public String companyProfile(@PathVariable Integer companyId, Model model) {
-//        CompanyDTO companyDTO = companyMapper.map(companyService.getCompanyById(companyId));
-//        model.addAttribute("company", companyDTO);
-//        return "company-profile";
-//    }
+
+
 
     @GetMapping(value = "/company/profile/{companyName}")
     public String showCompanyProfile(@PathVariable String companyName, Model model) {
