@@ -2,11 +2,12 @@ package com.itjobapp.Security;
 
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
+@Service
 @AllArgsConstructor
 public class UserServiceImpl implements UserService{
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
+    private final UserJpaRepository userRepository;
 
 
 
