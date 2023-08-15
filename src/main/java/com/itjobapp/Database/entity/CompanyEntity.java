@@ -3,6 +3,8 @@ package com.itjobapp.Database.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Getter
@@ -34,4 +36,8 @@ public class CompanyEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "company")
     private Set<JobOfferEntity> jobOffers;
 
+
+    public Set<JobOfferEntity> getJobOffers() {
+        return Objects.isNull(jobOffers) ? new HashSet<>() : jobOffers;
+    }
 }

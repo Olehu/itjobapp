@@ -8,6 +8,7 @@ import com.itjobapp.Database.repository.mapper.JobOfferEntityMapper;
 import com.itjobapp.Service.dao.CompanyDAO;
 import com.itjobapp.Service.domain.Company;
 import com.itjobapp.Service.domain.JobOffer;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,7 @@ public class CompanyService {
     private final JobOfferEntityMapper  jobOfferEntityMapper;
 
 
+    @Transactional
     public Company createCompany(Company company) {
         return companyDao.create(company);
     }

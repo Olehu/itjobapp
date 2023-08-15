@@ -77,13 +77,8 @@ public class JobOfferControler {
         }
 
         Company company = companyService.getCompanyByName(companyName);
-        if (company != null) {
             jobOfferDTO.setCompany(companyMapper.map(company));
-            jobOfferService.createJobOffer(jobOfferMapper.maper(jobOfferDTO));
-        } else {
-            log.error("Company not found");
-            return "error";
-        }
+
 
         jobOfferService.createJobOffer(jobOfferMapper.maper(jobOfferDTO));
         return "redirect:/joboffer";

@@ -26,12 +26,13 @@ public class SecurityConfig {
         http.csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/login", "/error", "/register").permitAll()
-                .requestMatchers("/candidate/log/**").hasAnyAuthority("CANDIDATE")
-                .requestMatchers("/company/log/**").hasAnyAuthority("COMPANY")
-                .requestMatchers("/candidate/log/**").hasAnyAuthority("CANDIDATE")
-                .requestMatchers("/").hasAnyAuthority("CANDIDATE", "COMPANY", "CANDIDATE")
-                .requestMatchers("/api/**").hasAnyAuthority("REST_API")
+                .requestMatchers("/**").permitAll()
+//                .requestMatchers("/login", "/error", "/register").permitAll()
+//                .requestMatchers("/candidate/log/**").hasAnyAuthority("CANDIDATE")
+//                .requestMatchers("/company/log/**").hasAnyAuthority("COMPANY")
+//                .requestMatchers("/candidate/log/**").hasAnyAuthority("CANDIDATE")
+//                .requestMatchers("/").hasAnyAuthority("CANDIDATE", "COMPANY", "CANDIDATE")
+//                .requestMatchers("/api/**").hasAnyAuthority("REST_API")
                 .and()
                 .formLogin()
                 .permitAll()
@@ -44,5 +45,7 @@ public class SecurityConfig {
 
         return http.build();
     }
-
+    public PasswordEncoderService passwordEncoderService(PasswordEncoder passwordEncoder) {
+        return new PasswordEncoderServiceImpl(passwordEncoder);
+    }
 }
