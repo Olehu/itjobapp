@@ -14,12 +14,10 @@ import org.mapstruct.ap.shaded.freemarker.ext.beans.MapModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -32,13 +30,27 @@ public class CompanyController {
     private final CompanyMapper companyMapper;
 
 
-    @GetMapping(value = "/company")
-    public String companyPage (Model model){
-        var allCompany = companyService.getAllCompanies().stream()
-                .map(companyMapper::map)
-                .toList();
-        model.addAttribute("companies", allCompany);
-return "company";
+    @GetMapping("/company")
+    public String companyPage(
+            @RequestParam(name = "location", required = false) String location,
+            @RequestParam(name = "isHiring", required = false) Boolean isHiring,
+            @RequestParam(name = "jobOffers", required = false) Boolean hasJobOffers,
+            Model model
+    ) {
+        List<CompanyDTO> companies;
+
+        if (location != null || isHiring != null || hasJobOffers != null) {
+            companies = companyService.searchCompanies(location, isHiring, hasJobOffers).stream()
+                    .map(companyMapper::map)
+                    .toList();
+        } else {
+            companies = companyService.getAllCompanies().stream()
+                    .map(companyMapper::map)
+                    .toList();
+        }
+
+        model.addAttribute("companies", companies);
+        return "company";
     }
 
 

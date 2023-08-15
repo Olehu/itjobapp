@@ -15,4 +15,6 @@ public interface CompanyDAO {
     Optional<Company> findByCompanyName(String companyName);
 
     Optional<Company> findById(Integer companyId);
+
+    List<CompanyEntity> searchCompanies(String location, Boolean isHiring, Boolean hasJobOffers);
 }

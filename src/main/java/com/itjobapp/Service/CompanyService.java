@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,5 +42,11 @@ public class CompanyService {
     public Company getCompanyById(Integer companyId) {
         return companyDao.findById(companyId)
                 .orElseThrow(() -> new NotFoundException("Company not found"));
+    }
+
+    public List<Company> searchCompanies(String location, Boolean isHiring, Boolean hasJobOffers) {
+        return companyDao.searchCompanies(location, isHiring, hasJobOffers).stream()
+                .map(companyEntityMapper::mapFromEntity)
+                .collect(Collectors.toList());
     }
 }
