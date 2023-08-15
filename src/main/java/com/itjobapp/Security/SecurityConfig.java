@@ -1,6 +1,7 @@
 package com.itjobapp.Security;
 
 import lombok.AllArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -10,34 +11,42 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
 @AllArgsConstructor
-public class SecurityConfig  {
+public class SecurityConfig   {
 
     private final UserDetailsService userDetailsService;
 
 
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder());
-    }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/company/**").hasRole("COMPANY")
-                .antMatchers("/candidate/**").hasRole("CANDIDATE")
-                .antMatchers("/public/**").permitAll()
+
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.csrf()
+                .disable()
+                .authorizeHttpRequests()
+                .requestMatchers("/login", "/error", "/register").permitAll()
+                .requestMatchers("/candidate/log/**").hasAnyAuthority("CANDIDATE")
+                .requestMatchers("/company/log/**").hasAnyAuthority("COMPANY")
+                .requestMatchers("/candidate/log/**").hasAnyAuthority("CANDIDATE")
+                .requestMatchers("/").hasAnyAuthority("CANDIDATE", "COMPANY", "CANDIDATE")
+                .requestMatchers("/api/**").hasAnyAuthority("REST_API")
                 .and()
                 .formLogin()
+                .permitAll()
                 .and()
                 .logout()
-                .and()
-                .csrf().disable();
+                .logoutSuccessUrl("/login")
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+                .permitAll();
+
+        return http.build();
     }
 
     @Bean
