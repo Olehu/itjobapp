@@ -1,10 +1,13 @@
 package com.itjobapp.Database.repository;
 
 import com.itjobapp.Database.entity.CompanyEntity;
+import com.itjobapp.Database.entity.JobOfferEntity;
 import com.itjobapp.Database.repository.jpa.CompanyJpaRepository;
 import com.itjobapp.Database.repository.mapper.CompanyEntityMapper;
+import com.itjobapp.Database.repository.mapper.JobOfferEntityMapper;
 import com.itjobapp.Service.dao.CompanyDAO;
 import com.itjobapp.Service.domain.Company;
+import com.itjobapp.Service.domain.JobOffer;
 import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
@@ -19,6 +22,8 @@ public class CompanyRepository implements CompanyDAO {
 
     private final CompanyEntityMapper companyEntityMapper;
     private final CompanyJpaRepository companyJpaRepository;
+
+    private final JobOfferEntityMapper  jobOfferEntityMapper;
     @Override
     public Company create(Company company) {
 
@@ -44,10 +49,8 @@ public class CompanyRepository implements CompanyDAO {
         return companyEntity.map(companyEntityMapper::mapFromEntity);
     }
 
-    @Override
-    public List<CompanyEntity> searchCompanies(String location, Boolean isHiring, Boolean hasJobOffers) {
-        return null;
-    }
+
+
 
 
 }

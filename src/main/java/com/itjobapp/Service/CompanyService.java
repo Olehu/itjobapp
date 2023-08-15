@@ -1,10 +1,13 @@
 package com.itjobapp.Service;
 
+import com.itjobapp.Controller.dto.JobOfferDTO;
 import com.itjobapp.Controller.web.exception.NotFoundException;
 import com.itjobapp.Database.entity.CompanyEntity;
 import com.itjobapp.Database.repository.mapper.CompanyEntityMapper;
+import com.itjobapp.Database.repository.mapper.JobOfferEntityMapper;
 import com.itjobapp.Service.dao.CompanyDAO;
 import com.itjobapp.Service.domain.Company;
+import com.itjobapp.Service.domain.JobOffer;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +22,7 @@ public class CompanyService {
 
     private final CompanyDAO companyDao;
     private final CompanyEntityMapper companyEntityMapper;
+    private final JobOfferEntityMapper  jobOfferEntityMapper;
 
 
     public Company createCompany(Company company) {
@@ -69,4 +73,6 @@ public class CompanyService {
                 .map(companyEntityMapper::mapFromEntity)
                 .collect(Collectors.toList());
     }
+
+
 }
