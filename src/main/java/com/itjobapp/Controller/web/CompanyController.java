@@ -32,12 +32,6 @@ public class CompanyController {
     private final CompanyMapper companyMapper;
 
 
-    private static final String PROFILE = "/company/profile";
-    private static final String NEW_PROJECT = "/company/new-project";
-
-//    private static final String REGISTER = "/company-form";
-
-
     @GetMapping(value = "/company")
     public String companyPage (Model model){
         var allCompany = companyService.getAllCompanies().stream()
@@ -65,8 +59,6 @@ return "company";
     }
 
 
-
-
     @GetMapping(value = "/company/profile/{companyName}")
     public String showCompanyProfile(@PathVariable String companyName, Model model) {
         Optional<Company> companyOptional = Optional.of(companyService.getCompanyByName(companyName));
@@ -75,9 +67,7 @@ return "company";
             model.addAttribute("company", companyOptional.get());
             return "company-profile";
         } else {
-//            throw new RuntimeException("Company not found: " + companyName);
-            // Obsłuż przypadek, gdy firma nie została znaleziona
-            // Możesz przekierować na stronę błędu lub inaczej obsłużyć ten przypadek
+
             return "company-not-found";
         }
     }

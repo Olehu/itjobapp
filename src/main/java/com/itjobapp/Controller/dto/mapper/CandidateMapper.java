@@ -8,4 +8,5 @@ import org.mapstruct.Mapper;
 public interface CandidateMapper {
     CandidateDTO map(final Candidate candidate);
 
+    Candidate maper(CandidateDTO candidateDTO);
 }

@@ -11,4 +11,6 @@ public interface CandidateEntityMapper {
 
     CandidateEntity mapToEntity(Candidate candidate);
 
+
+    Candidate mapFromEntity(CandidateEntity candidateEntity);
 }

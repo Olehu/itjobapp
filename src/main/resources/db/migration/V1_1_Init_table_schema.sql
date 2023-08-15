@@ -13,8 +13,8 @@ CREATE TABLE company (
 
 CREATE TABLE candidate (
     candidate_id SERIAL NOT NULL,
-    first_name VARCHAR(40) NOT NULL,
-    last_name VARCHAR(40) NOT NULL,
+    first_name VARCHAR(40),
+    last_name VARCHAR(40),
     email VARCHAR(100) NOT NULL,
     skills VARCHAR(255),
     phone_number VARCHAR(20),

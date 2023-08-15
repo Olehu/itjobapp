@@ -31,7 +31,12 @@
             <label for="otherRequirements" class="form-label">Other Requirements</label>
             <textarea class="form-control" id="otherRequirements" th:field="*{otherRequirements}" placeholder="Enter other requirements"></textarea>
         </div>
+        <div class="mb-3">
+            <label for="skills" class="form-label">Skills:</label>
+            <textarea class="form-control" id="skills" th:field="*{skills}" placeholder="Enter skills:"></textarea>
+        </div>
 
+        <input type="hidden" name="companyName" th:value="${jobOffer.company.companyName}" />
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>

@@ -18,32 +18,49 @@
 <div class="container">
     <div class="row mt-3">
         <div class="col-md-4">
-            <a th:href="@{/}" class="btn btn-info" role="button">Go back to the main page</a>
+            <a th:href="@{/candidate/new}" class="btn btn-info" role="button">New Candidate</a>
         </div>
     </div>
+</div>
 
-    <br>
-    <br>
+<br>
+<br>
 
-    <h2>CandidateList</h2>
-    <form action="#" th:action="@{/candidate}" method="GET">
-<!--        <div class="row mt-3">-->
-<!--            <div class="col-md-6">-->
-<!--                <h3>What is going on with your car?</h3>-->
-<!--                <div class="row mt-3">-->
-<!--                    <div class="col-md-6">-->
-<!--                        <label for="carVins">Car VIN:</label>-->
-<!--                        <select id="carVins" th:name="carVin">-->
-<!--                            <option th:each="carVin : ${allCarVins}" th:value="${carVin}" th:text="${carVin}"></option>-->
-<!--                        </select>-->
-<!--                    </div>-->
-<!--                    <div class="col-md-6">-->
-<!--                        <input type="submit" value="Find!" class="btn btn-success">-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-    </form>
+<div class="container">
+    <div class="row mt-3">
+        <div class="col-md-4">
+            <a th:href="@{/}" class="btn btn-info" role="button">Home</a>
+        </div>
     </div>
+</div>
+
+<div class="container mt-4">
+    <h2>All Candidates</h2>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Skills</th>
+            <th>Phone Number</th>
+            <th>Availability Status</th>
+            <th>View</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="candidate : ${candidates}">
+            <td th:text="${candidate.firstName}"></td>
+            <td th:text="${candidate.lastName}"></td>
+            <td th:text="${candidate.email}"></td>
+            <td th:text="${candidate.skills}"></td>
+            <td th:text="${candidate.phoneNumber}"></td>
+            <td th:text="${candidate.availabilityStatus}"></td>
+            <td><a th:href="@{/candidate/profile/{email}(email=${candidate.email})}" class="btn btn-primary">View</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
 </body>
 </html>

@@ -10,7 +10,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "candidates")
+@With
+@Table(name = "candidate")
 public class CandidateEntity {
     @Id
     @Column(name = "candidate_id")
@@ -28,9 +29,9 @@ public class CandidateEntity {
     private String phoneNumber;
 
     @Column(name = "availability_status")
-    private Boolean availabilityStatus;
+    private Boolean available;
 
-    @Column(name = "profile_image")
-    private String profileImage;
+//    @Column(name = "profile_image")
+//    private String profileImage;
 
 }

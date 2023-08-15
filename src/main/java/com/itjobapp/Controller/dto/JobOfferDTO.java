@@ -14,6 +14,7 @@ public class JobOfferDTO {
     String name;
     String experienceLevel;
     String otherRequirements;
+    String skills;
     CompanyDTO company;
 
 }

@@ -45,6 +45,7 @@
             <th>Name</th>
             <th>Experience Level</th>
             <th>Other Requirements</th>
+            <th>Skills</th>
             <th>Company</th>
         </tr>
         </thead>
@@ -53,6 +54,7 @@
             <td th:text="${jobOffer.name}"></td>
             <td th:text="${jobOffer.experienceLevel}"></td>
             <td th:text="${jobOffer.otherRequirements}"></td>
+            <td th:text="${jobOffer.skills}"></td>
             <td th:text="${jobOffer.company.companyName}"></td>
         </tr>
         </tbody>

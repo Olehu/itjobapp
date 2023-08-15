@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+          crossorigin="anonymous">
+    <title>Candidate Profile</title>
+</head>
+
+<body>
+<div class="container">
+    <h1>Candidate Profile</h1>
+</div>
+
+<div class="container">
+    <div class="row mt-3">
+        <div class="col-md-4">
+            <a th:href="@{/candidate}" class="btn btn-info" role="button">Back to Candidates</a>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-4">
+    <h2>Candidate Details</h2>
+    <div>
+        <p><strong>First Name:</strong> <span th:text="${candidate.firstName}"></span></p>
+        <p><strong>Last Name:</strong> <span th:text="${candidate.lastName}"></span></p>
+        <p><strong>Email:</strong> <span th:text="${candidate.email}"></span></p>
+        <p><strong>Skills:</strong> <span th:text="${candidate.skills}"></span></p>
+        <p><strong>Phone Number:</strong> <span th:text="${candidate.phoneNumber}"></span></p>
+        <p><strong>Availability Status:</strong> <span th:text="${candidate.availabilityStatus}"></span></p>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row mt-3">
+        <div class="col-md-4">
+            <!-- Place your additional content here if needed -->
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
