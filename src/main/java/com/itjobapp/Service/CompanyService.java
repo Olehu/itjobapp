@@ -45,7 +45,27 @@ public class CompanyService {
     }
 
     public List<Company> searchCompanies(String location, Boolean isHiring, Boolean hasJobOffers) {
-        return companyDao.searchCompanies(location, isHiring, hasJobOffers).stream()
+        List<CompanyEntity> companyEntities = companyDao.getAllCompanies();
+
+        return companyEntities.stream()
+                .filter(companyEntity -> {
+                    boolean matches = true;
+
+                    if (location != null && !location.isEmpty()) {
+                        matches = companyEntity.getLocation().equalsIgnoreCase(location);
+                    }
+
+                    if (isHiring != null) {
+                        matches = matches && companyEntity.getIsHiring().equals(isHiring);
+                    }
+
+                    if (hasJobOffers != null) {
+                        boolean companyHasJobOffers = !companyEntity.getJobOffers().isEmpty();
+                        matches = matches && (hasJobOffers.equals(companyHasJobOffers));
+                    }
+
+                    return matches;
+                })
                 .map(companyEntityMapper::mapFromEntity)
                 .collect(Collectors.toList());
     }

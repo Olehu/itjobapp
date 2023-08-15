@@ -46,34 +46,8 @@ public class CompanyRepository implements CompanyDAO {
 
     @Override
     public List<CompanyEntity> searchCompanies(String location, Boolean isHiring, Boolean hasJobOffers) {
-        return companyJpaRepository.searchCompanies(location, isHiring, hasJobOffers);
+        return null;
     }
 
-    //    @Override
-//    public List<CompanyEntity> searchCompanies(String location, Boolean isHiring, Boolean hasJobOffers) {
-//        Specification<CompanyEntity> spec = Specification.where(null);
-//
-//        if (location != null && !location.isEmpty()) {
-//            spec = spec.and((root, query, criteriaBuilder) ->
-//                    criteriaBuilder.equal(root.get("location"), location));
-//        }
-//
-//        if (isHiring != null) {
-//            spec = spec.and((root, query, criteriaBuilder) ->
-//                    criteriaBuilder.equal(root.get("isHiring"), isHiring));
-//        }
-//
-//        if (hasJobOffers != null) {
-//            if (hasJobOffers) {
-//                spec = spec.and((root, query, criteriaBuilder) ->
-//                        criteriaBuilder.isNotEmpty(root.get("jobOffers")));
-//            } else {
-//                spec = spec.and((root, query, criteriaBuilder) ->
-//                        criteriaBuilder.isEmpty(root.get("jobOffers")));
-//            }
-//        }
-//
-//        List<CompanyEntity> filteredEntities = companyJpaRepository.searchCompanies(spec);
-//        return filteredEntities;
-//    }
+
 }

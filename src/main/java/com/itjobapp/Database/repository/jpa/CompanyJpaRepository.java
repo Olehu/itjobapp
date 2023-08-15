@@ -12,8 +12,6 @@ import java.util.Optional;
 public interface CompanyJpaRepository extends JpaRepository<CompanyEntity, Integer>, JpaSpecificationExecutor<CompanyEntity> {
     Optional<CompanyEntity> findByCompanyName(String companyName);
 
-    @Query("SELECT c FROM CompanyEntity c WHERE c.location = :location AND c.isHiring = :isHiring AND c.jobOffers = :jobOffers")
-    List<CompanyEntity> searchCompanies(@Param("location") String location, @Param("isHiring") Boolean isHiring, @Param("jobOffers") Boolean jobOffers);
 
 
 
