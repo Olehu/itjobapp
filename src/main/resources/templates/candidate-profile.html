@@ -25,13 +25,14 @@
 
 <div class="container mt-4">
     <h2>Candidate Details</h2>
-    <div>
+    <div>   <img th:if="${candidate.profileImage}" th:src="${candidate.profileImage}" alt="Profile Image" class="img-thumbnail"/>
+        <img th:unless="${candidate.profileImage}" th:src="@{/static/standard-profile.png}" alt="Default Profile Image" class="img-thumbnail"/>
         <p><strong>First Name:</strong> <span th:text="${candidate.firstName}"></span></p>
         <p><strong>Last Name:</strong> <span th:text="${candidate.lastName}"></span></p>
         <p><strong>Email:</strong> <span th:text="${candidate.email}"></span></p>
         <p><strong>Skills:</strong> <span th:text="${candidate.skills}"></span></p>
         <p><strong>Phone Number:</strong> <span th:text="${candidate.phoneNumber}"></span></p>
-        <p><strong>Availability Status:</strong> <span th:text="${candidate.availabilityStatus}"></span></p>
+        <p><strong>Availability Status:</strong> <span th:text="${candidate.available}"></span></p>
     </div>
 </div>
 

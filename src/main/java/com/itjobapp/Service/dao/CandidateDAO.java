@@ -15,4 +15,6 @@ public interface CandidateDAO {
     Optional<Candidate> findByEmail(String candidateName);
 
     Candidate createByMail(String email);
+
+    Candidate update(Candidate existingCandidate);
 }

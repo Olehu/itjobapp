@@ -9,15 +9,14 @@ import com.itjobapp.Security.UserService;
 import com.itjobapp.Service.CandidateService;
 import com.itjobapp.Service.CompanyService;
 import com.itjobapp.Service.domain.Candidate;
-import com.itjobapp.Service.domain.Company;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import java.util.Optional;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 
 @Controller
@@ -49,7 +48,7 @@ public class DashboardController {
 
         }
 
-        return "/";
+        return "home";
     }
 
     private String getHighestUserRole(Authentication authentication) {
@@ -59,8 +58,48 @@ public class DashboardController {
             } else if (authority.getAuthority().equals("COMPANY")) {
                 return "COMPANY";
             }
-            // Add more roles if needed
         }
         return "Unknown";
+    }
+
+    @GetMapping("/edit-profile")
+    public String showEditProfile(Authentication authentication, Model model) {
+        if (authentication != null && authentication.isAuthenticated()) {
+            String email = authentication.getName();
+            String role = getHighestUserRole(authentication);
+
+
+            if(role.equals("CANDIDATE")) {
+                CandidateDTO candidate = candidateMapper.map(candidateService.getCandidateByEmail(email));
+                model.addAttribute("candidate", candidate);
+                return "dashboard-candidate-edit-profile";
+            } else if(role.equals("COMPANY")) {
+                CompanyDTO company = companyMapper.map(companyService.getCompanyByEmail(email));
+                model.addAttribute("company", company);
+                return "dashboard-company";
+            }
+
+        }
+
+        return "home";
+    }
+    @PostMapping("/dashboard-candidate-edit-profile")
+    public String editProfile(Authentication authentication, @ModelAttribute CandidateDTO candidateDTO) {
+        if (authentication != null && authentication.isAuthenticated()) {
+            String email = authentication.getName();
+
+                Candidate existingCandidate = candidateService.getCandidateByEmail(email)
+            .withFirstName(candidateDTO.getFirstName())
+            .withLastName(candidateDTO.getLastName())
+            .withEmail(candidateDTO.getEmail())
+            .withSkills(candidateDTO.getSkills())
+            .withPhoneNumber(candidateDTO.getPhoneNumber())
+            .withAvailable(candidateDTO.getAvailable());
+
+                    candidateService.refactor(existingCandidate);
+                return "redirect:/dashboard";
+            }
+
+        return "redirect:/home";
     }
 }

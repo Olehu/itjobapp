@@ -44,4 +44,21 @@ public class CandidateRepository implements CandidateDAO {
         return candidateEntityMapper.mapFromEntity(saved);
 
     }
+
+    @Override
+    public Candidate update(Candidate existingCandidate) {
+        CandidateEntity search = candidateJpaRepository.findByEmail(existingCandidate.getEmail()).orElseThrow(()
+                -> new RuntimeException("Candidate not found"));
+
+        CandidateEntity toSave =
+                search.withEmail(existingCandidate.getEmail())
+                        .withFirstName(existingCandidate.getFirstName())
+                        .withLastName(existingCandidate.getLastName())
+                        .withPhoneNumber(existingCandidate.getPhoneNumber())
+                        .withSkills(existingCandidate.getSkills())
+                        .withAvailable(existingCandidate.getAvailable());
+        CandidateEntity saved = candidateJpaRepository.save(toSave);
+        return candidateEntityMapper.mapFromEntity(saved);
+
+    }
 }

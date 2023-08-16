@@ -35,4 +35,8 @@ public class CandidateService {
     public Candidate createCandidateByMail(String email) {
         return candidateDao.createByMail(email);
     }
+
+    public Candidate refactor(Candidate existingCandidate) {
+        return candidateDao.update(existingCandidate);
+    }
 }

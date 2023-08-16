@@ -3,6 +3,8 @@ package com.itjobapp.Database.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.awt.*;
+
 @Getter
 @Setter
 @EqualsAndHashCode(of = "candidateId")
@@ -30,8 +32,8 @@ public class CandidateEntity {
 
     @Column(name = "availability_status")
     private Boolean available;
-
+//
 //    @Column(name = "profile_image")
-//    private String profileImage;
+//    private byte profileImage;
 
 }

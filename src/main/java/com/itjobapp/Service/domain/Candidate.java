@@ -19,6 +19,6 @@ public class Candidate {
     String email;
     String skills;
     String phoneNumber;
-    Boolean availabilityStatus;
-
+    Boolean available;
+    String profileImage;
 }
