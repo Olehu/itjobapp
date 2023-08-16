@@ -31,4 +31,8 @@ public class CandidateService {
     public Candidate getCandidateByEmail(String candidateEmail) {
         return candidateDao.findByEmail(candidateEmail)
                 .orElseThrow(() -> new NotFoundException("Candidate not found"));    }
+
+    public Candidate createCandidateByMail(String email) {
+        return candidateDao.createByMail(email);
+    }
 }

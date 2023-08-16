@@ -36,4 +36,12 @@ public class CandidateRepository implements CandidateDAO {
         Optional<CandidateEntity> candidateEntity = candidateJpaRepository.findByEmail(candidateEmail);
         return candidateEntity.map(candidateEntityMapper::mapFromEntity);
     }
+
+    @Override
+    public Candidate createByMail(String email) {
+        CandidateEntity tosave = new CandidateEntity().builder().email(email).build();
+        CandidateEntity saved = candidateJpaRepository.save(tosave);
+        return candidateEntityMapper.mapFromEntity(saved);
+
+    }
 }

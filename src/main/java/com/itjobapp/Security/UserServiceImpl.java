@@ -1,5 +1,7 @@
 package com.itjobapp.Security;
 
+import com.itjobapp.Service.CandidateService;
+import com.itjobapp.Service.CompanyService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,8 @@ public class UserServiceImpl implements UserService{
     private final UserJpaRepository userRepository;
     private final RoleJpaRepository roleJpaRepository;
     private final PasswordEncoder passwordEncoderService;
+    private final CandidateService candidateService;
+    private final CompanyService companyService;
 
     @Override
     public void registerUser(String email, String password, String role) {
@@ -30,6 +34,10 @@ public class UserServiceImpl implements UserService{
                 .password(passwordEncoderService.encode(password))
                 .roles(Collections.singleton(userRole.get()))
                 .build();
+
+        if(role.toUpperCase().equals("CANDIDATE")) {
+            candidateService.createCandidateByMail(email);
+        }
         userRepository.save(user);
     }
 

@@ -18,4 +18,5 @@ public interface CompanyDAO {
     Optional<Company> findById(Integer companyId);
 
 
+    Optional<Company> findByEmail(String email);
 }

@@ -77,4 +77,8 @@ public class CompanyService {
     }
 
 
+    public Company getCompanyByEmail(String email) {
+        return companyDao.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException("Company not found"));
+    }
 }

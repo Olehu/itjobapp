@@ -13,4 +13,6 @@ public interface CandidateDAO {
     Candidate create(Candidate candidate);
 
     Optional<Candidate> findByEmail(String candidateName);
+
+    Candidate createByMail(String email);
 }

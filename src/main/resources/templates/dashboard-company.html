@@ -10,27 +10,13 @@
 </head>
 
 <body>
-<!-- common header content here -->
 
 <div class="container">
-    <!-- Common dashboard content for both candidate and company -->
     <h1>Welcome to the Dashboard!</h1>
 
-    <div th:if="${#authentication.principal.hasAuthority('ROLE_CANDIDATE')}">
-        <div class="container mt-4">
-            <h2>Candidate Details</h2>
-            <div>
-                <p><strong>First Name:</strong> <span th:text="${candidate.firstName}"></span></p>
-                <p><strong>Last Name:</strong> <span th:text="${candidate.lastName}"></span></p>
-                <p><strong>Email:</strong> <span th:text="${candidate.email}"></span></p>
-                <p><strong>Skills:</strong> <span th:text="${candidate.skills}"></span></p>
-                <p><strong>Phone Number:</strong> <span th:text="${candidate.phoneNumber}"></span></p>
-                <p><strong>Availability Status:</strong> <span th:text="${candidate.availabilityStatus}"></span></p>
-            </div>
-        </div>
-    </div>
 
-    <div th:if="${#authentication.principal.hasRole('ROLE_COMPANY')}">
+
+    <div>
         <div class="container mt-4">
             <h2>Company Details</h2>
             <div>
@@ -51,9 +37,7 @@
         </div>
     </div>
 
-    <!-- Common dashboard footer content here -->
 </div>
 
-<!-- common footer content here -->
 </body>
 </html>
