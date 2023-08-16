@@ -7,6 +7,7 @@ import com.itjobapp.Service.dao.CandidateDAO;
 import com.itjobapp.Service.domain.Candidate;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,7 +37,11 @@ public class CandidateService {
         return candidateDao.createByMail(email);
     }
 
-    public Candidate refactor(Candidate existingCandidate) {
+    public Candidate update(Candidate existingCandidate) {
         return candidateDao.update(existingCandidate);
+    }
+
+    public Candidate saveImage(MultipartFile imageFile, Candidate existingCandidate) {
+        return candidateDao.saveImage(imageFile, existingCandidate);
     }
 }

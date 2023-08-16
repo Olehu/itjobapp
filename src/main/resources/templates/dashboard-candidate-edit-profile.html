@@ -17,7 +17,7 @@
   <form th:action="@{/dashboard-candidate-edit-profile}" th:object="${candidate}" method="post">
     <div class="mb-3">
       <label for="profileImage" class="form-label">Profile Image</label>
-      <input type="file" class="form-control" id="profileImage" name="profileImage">
+      <input type="file" class="form-control" id="profileImage" name="profileImage" th:field="*{profileImage}">
     </div>
 
     <div class="mb-3">

@@ -3,6 +3,7 @@ package com.itjobapp.Service.domain;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Lob;
 import lombok.Builder;
 import lombok.Value;
 import lombok.With;
@@ -20,5 +21,6 @@ public class Candidate {
     String skills;
     String phoneNumber;
     Boolean available;
-    String profileImage;
+    @Lob
+    private byte[] profileImage;
 }

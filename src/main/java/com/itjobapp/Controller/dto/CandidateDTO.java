@@ -1,5 +1,6 @@
 package com.itjobapp.Controller.dto;
 
+import jakarta.persistence.Lob;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,7 +18,9 @@ public class CandidateDTO {
     String skills;
     String phoneNumber;
     Boolean available;
-    String profileImage;
+    @Lob
+    private byte[] profileImage;
+
 
 
 

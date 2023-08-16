@@ -17,6 +17,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @Controller
@@ -96,9 +98,40 @@ public class DashboardController {
             .withPhoneNumber(candidateDTO.getPhoneNumber())
             .withAvailable(candidateDTO.getAvailable());
 
-                    candidateService.refactor(existingCandidate);
+                    candidateService.update(existingCandidate);
                 return "redirect:/dashboard";
             }
+
+        return "redirect:/home";
+    }
+
+
+    @GetMapping("upload-image")
+    public String uploadImageForm(Authentication authentication, Model model) {
+        if (authentication != null && authentication.isAuthenticated()) {
+            String email = authentication.getName();
+
+
+                CandidateDTO candidate = candidateMapper.map(candidateService.getCandidateByEmail(email));
+                model.addAttribute("candidate", candidate);
+                return "upload-image";
+            }
+
+
+        return "home";
+    }
+    @PostMapping("upload-image")
+    public String uploadImagePost(
+            Authentication authentication,
+            @RequestParam("profileImage") MultipartFile imageFile) {
+        if (authentication != null && authentication.isAuthenticated()) {
+            String email = authentication.getName();
+
+            Candidate existingCandidate = candidateService.getCandidateByEmail(email);
+
+            candidateService.saveImage(imageFile, existingCandidate);
+            return "redirect:/dashboard";
+        }
 
         return "redirect:/home";
     }

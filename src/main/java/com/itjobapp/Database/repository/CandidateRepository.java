@@ -7,7 +7,9 @@ import com.itjobapp.Service.dao.CandidateDAO;
 import com.itjobapp.Service.domain.Candidate;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,8 +58,25 @@ public class CandidateRepository implements CandidateDAO {
                         .withLastName(existingCandidate.getLastName())
                         .withPhoneNumber(existingCandidate.getPhoneNumber())
                         .withSkills(existingCandidate.getSkills())
-                        .withAvailable(existingCandidate.getAvailable());
+                        .withAvailable(existingCandidate.getAvailable())
+                        .withProfileImage(existingCandidate.getProfileImage());
         CandidateEntity saved = candidateJpaRepository.save(toSave);
+        return candidateEntityMapper.mapFromEntity(saved);
+
+    }
+
+    @Override
+    public Candidate saveImage(MultipartFile imageFile, Candidate existingCandidate) {
+        CandidateEntity search = candidateJpaRepository.findByEmail(existingCandidate.getEmail()).orElseThrow(()
+                -> new RuntimeException("Candidate not found"));
+
+        CandidateEntity saved = null;
+        try {
+            byte[] image = imageFile.getBytes();
+            saved = candidateJpaRepository.save(search.withProfileImage(image));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         return candidateEntityMapper.mapFromEntity(saved);
 
     }

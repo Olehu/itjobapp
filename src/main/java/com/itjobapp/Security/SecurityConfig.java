@@ -46,7 +46,7 @@ public class SecurityConfig {
                 .requestMatchers("/", "/login", "/error", "/register").permitAll()
                 .requestMatchers("/dashboard-candidate").hasAnyAuthority("CANDIDATE")
                 .requestMatchers("/dashboard-company").hasAnyAuthority("COMPANY")
-                .requestMatchers("/dashboard", "/edit-profile").hasAnyAuthority("CANDIDATE", "COMPANY")
+                .requestMatchers("/dashboard", "/edit-profile", "/upload-image").hasAnyAuthority("CANDIDATE", "COMPANY")
 //                .requestMatchers("/").permitAll()
                 .requestMatchers("/api/**").hasAnyAuthority("REST_API")
                 .and()
