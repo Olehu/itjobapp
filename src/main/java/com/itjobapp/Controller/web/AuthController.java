@@ -18,15 +18,11 @@ public class AuthController {
         return "login";
     }
     @PostMapping("/login")
-    public String loginUser(@RequestParam("email") String email,
-                            @RequestParam("password") String password,
-                            Model model) {
-        if (userService.authenticateUser(email, password)) {
-            return "redirect:/dashboard";
-        } else {
-            model.addAttribute("error", "Invalid email or password");
-            return "login";
-        }
+    public String loginUser(@RequestParam("userName") String userName,
+                            @RequestParam("password") String password) {
+        userService.authenticateUser(userName, password);
+        return "redirect:/dashboard";
+
     }
 
 
