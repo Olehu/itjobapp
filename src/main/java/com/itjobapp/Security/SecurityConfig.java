@@ -3,6 +3,8 @@ package com.itjobapp.Security;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,10 +17,24 @@ import org.springframework.security.web.SecurityFilterChain;
 @AllArgsConstructor
 public class SecurityConfig {
 
-    private final UserDetailsService userDetailsService;
-    private final PasswordEncoder passwordEncoder;
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-
+    @Bean
+    public AuthenticationManager authManager(
+            HttpSecurity http,
+            PasswordEncoder passwordEncoder,
+            UserDetailsService userDetailService
+    )
+            throws Exception {
+        return http.getSharedObject(AuthenticationManagerBuilder.class)
+                .userDetailsService(userDetailService)
+                .passwordEncoder(passwordEncoder)
+                .and()
+                .build();
+    }
 
 
     @Bean
@@ -27,14 +43,15 @@ public class SecurityConfig {
                 .disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/**").permitAll()
-//                .requestMatchers("/login", "/error", "/register").permitAll()
-//                .requestMatchers("/candidate/log/**").hasAnyAuthority("CANDIDATE")
-//                .requestMatchers("/company/log/**").hasAnyAuthority("COMPANY")
-//                .requestMatchers("/candidate/log/**").hasAnyAuthority("CANDIDATE")
-//                .requestMatchers("/").hasAnyAuthority("CANDIDATE", "COMPANY", "CANDIDATE")
-//                .requestMatchers("/api/**").hasAnyAuthority("REST_API")
+                .requestMatchers("/login", "/error", "/register").permitAll()
+                .requestMatchers("/candidate/dashboard/**").hasAnyAuthority("CANDIDATE")
+                .requestMatchers("/company/dashboard/**").hasAnyAuthority("COMPANY")
+                .requestMatchers("/dashboard").hasAnyAuthority("CANDIDATE", "COMPANY", "CANDIDATE")
+                .requestMatchers("/").permitAll()
+                .requestMatchers("/api/**").hasAnyAuthority("REST_API")
                 .and()
                 .formLogin()
+                .loginPage("/login")
                 .permitAll()
                 .and()
                 .logout()
@@ -45,7 +62,5 @@ public class SecurityConfig {
 
         return http.build();
     }
-    public PasswordEncoderService passwordEncoderService(PasswordEncoder passwordEncoder) {
-        return new PasswordEncoderServiceImpl(passwordEncoder);
-    }
+
 }
