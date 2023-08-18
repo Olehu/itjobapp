@@ -1,5 +1,6 @@
 package com.itjobapp.Database.repository;
 
+import com.itjobapp.Controller.dto.JobOfferDTO;
 import com.itjobapp.Database.entity.CompanyEntity;
 import com.itjobapp.Database.entity.JobOfferEntity;
 import com.itjobapp.Database.repository.jpa.CompanyJpaRepository;
@@ -14,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @AllArgsConstructor
@@ -47,5 +49,30 @@ public class JobOfferRepository implements JobOfferDAO {
     @Override
     public List<JobOfferEntity> getAllJobOffer() {
         return jobOfferJpaRepository.findAll();
+    }
+
+    @Override
+    public Optional<JobOffer> findByJobOfferName(String jobOfferName) {
+
+        Optional<JobOfferEntity> jobOfferEntity = jobOfferJpaRepository.findByName(jobOfferName);
+        return jobOfferEntity.map(jobOfferEntityMapper::mapFromEntity);
+    }
+
+    @Override
+    public JobOffer update(JobOfferDTO updated) {
+
+        JobOfferEntity jobOfferEntity = jobOfferJpaRepository.findByName(updated.getName()).get();
+        jobOfferEntity = jobOfferEntity
+                .withSkills(updated.getSkills())
+                .withExperienceLevel(updated.getExperienceLevel())
+                .withOtherRequirements(updated.getOtherRequirements());
+
+        JobOfferEntity saved = jobOfferJpaRepository.save(jobOfferEntity);
+        return jobOfferEntityMapper.mapFromEntity(saved);
+    }
+
+    @Override
+    public void delete(String name) {
+        jobOfferJpaRepository.deleteByName(name);
     }
 }

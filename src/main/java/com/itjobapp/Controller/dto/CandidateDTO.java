@@ -18,8 +18,7 @@ public class CandidateDTO {
     String skills;
     String phoneNumber;
     Boolean available;
-    @Lob
-    private byte[] profileImage;
+    String profileImage;
 
 
 

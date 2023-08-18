@@ -81,4 +81,12 @@ public class CompanyService {
         return companyDao.findByEmail(email)
                 .orElseThrow(() -> new NotFoundException("Company not found"));
     }
+
+    public Company update(Company existingCompany) {
+        return companyDao.update(existingCompany);
+    }
+
+    public Company createCompanyByMail(String email) {
+        return companyDao.createByMail(email);
+    }
 }

@@ -3,16 +3,18 @@ package com.itjobapp.Controller.web;
 import com.itjobapp.Controller.dto.CandidateDTO;
 import com.itjobapp.Controller.dto.mapper.CandidateMapper;
 import com.itjobapp.Service.CandidateService;
+import com.itjobapp.Service.CompanyService;
 import com.itjobapp.Service.domain.Candidate;
+import com.itjobapp.Service.domain.Company;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @AllArgsConstructor
@@ -21,24 +23,36 @@ public class CandidateController {
 
     private final CandidateService candidateService;
     private final CandidateMapper candidateMapper;
+    private final CompanyService companyService;
 
     @GetMapping(value = "/candidate")
-    public String candidatePage (Model model){
-        var allCandidate = candidateService.getAllCandidates().stream()
-                .map(candidateMapper::map)
-                .toList();
-        model.addAttribute("candidates", allCandidate);
+    public String candidatePage(
+            @RequestParam(name = "skills", required = false) String skills,
+            @RequestParam(name = "available", required = false) Boolean available,
+            Model model
+    ) {
+        List<CandidateDTO> candidates;
+        if (skills != null || available != null) {
+            candidates = candidateService.searchCandidates(skills, available).stream()
+                    .map(candidateMapper::map)
+                    .toList();
+        } else {
+            candidates = candidateService.getAllCandidates().stream()
+                    .map(candidateMapper::map)
+                    .toList();
+        }
+        model.addAttribute("candidates", candidates);
         return "candidate";
     }
 
 
-    @GetMapping(value ="/candidate/new")
+    @GetMapping(value = "/candidate/new")
     public String showCandidateForm(Model model) {
         model.addAttribute("candidate", new CandidateDTO());
         return "candidate-form";
     }
 
-    @PostMapping(value ="/candidate/new")
+    @PostMapping(value = "/candidate/new")
     public String createcandidateDTO(@ModelAttribute("candidate") CandidateDTO candidateDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "candidate";
@@ -51,15 +65,36 @@ public class CandidateController {
 
     @GetMapping(value = "/candidate/profile/{candidateEmail}")
     public String showCandidateProfile(
-            @PathVariable String candidateEmail, Model model) {
-        Optional<Candidate> candidateOptional = Optional.of(candidateService.getCandidateByEmail(candidateEmail));
+            @PathVariable String candidateEmail,
+            Authentication authentication
+            , Model model) {
+        Boolean isCompany = false;
+        if (authentication != null && authentication.isAuthenticated()) {
 
-        if (candidateOptional.isPresent()) {
-            model.addAttribute("candidate", candidateOptional.get());
-            return "candidate-profile";
-        } else {
+            Optional<Company> company = Optional.ofNullable(companyService.getCompanyByEmail(authentication.getName()));
 
-            return "candidate-not-found";
+            if (company.isPresent()) {
+                isCompany = true;
+            }
         }
+
+        Candidate candidate = candidateService.findCandidateByEmail(candidateEmail);
+
+        model.addAttribute("isCompany", isCompany);
+        model.addAttribute("candidate", candidate);
+
+        return "candidate-profile";
+    }
+
+
+
+    @PostMapping("/hire/{candidateEmail}")
+    public String hireCandidate(@PathVariable String candidateEmail) {
+        Candidate candidate = candidateService.findCandidateByEmail(candidateEmail);
+        if (candidate != null) {
+            candidate = candidate.withAvailable(false);
+            candidateService.update(candidate);
+        }
+        return "redirect:/candidate/{candidateEmail}";
     }
 }

@@ -2,23 +2,21 @@ package com.itjobapp.Controller.web;
 
 import com.itjobapp.Controller.dto.CandidateDTO;
 import com.itjobapp.Controller.dto.CompanyDTO;
+import com.itjobapp.Controller.dto.JobOfferDTO;
 import com.itjobapp.Controller.dto.mapper.CandidateMapper;
 import com.itjobapp.Controller.dto.mapper.CompanyMapper;
 import com.itjobapp.Security.UserJpaRepository;
 import com.itjobapp.Security.UserService;
 import com.itjobapp.Service.CandidateService;
 import com.itjobapp.Service.CompanyService;
-import com.itjobapp.Service.domain.Candidate;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
+
+import java.util.Set;
 
 
 @Controller
@@ -39,12 +37,21 @@ public class DashboardController {
 
 
             if(role.equals("CANDIDATE")) {
-                CandidateDTO candidate = candidateMapper.map(candidateService.getCandidateByEmail(email));
+                CandidateDTO candidate = candidateMapper.map(candidateService.findCandidateByEmail(email));
                 model.addAttribute("candidate", candidate);
                 return "dashboard-candidate";
             } else if(role.equals("COMPANY")) {
                 CompanyDTO company = companyMapper.map(companyService.getCompanyByEmail(email));
+
+                if(company.getIsHiring() == null) {
+                    company = company.builder().isHiring(false).build();
+                }
+
+                Set<JobOfferDTO> jobOffers = company.getJobOffers();
+
                 model.addAttribute("company", company);
+                model.addAttribute("jobOffers", jobOffers);
+
                 return "dashboard-company";
             }
 
@@ -72,67 +79,22 @@ public class DashboardController {
 
 
             if(role.equals("CANDIDATE")) {
-                CandidateDTO candidate = candidateMapper.map(candidateService.getCandidateByEmail(email));
+                CandidateDTO candidate = candidateMapper.map(candidateService.findCandidateByEmail(email));
                 model.addAttribute("candidate", candidate);
                 return "dashboard-candidate-edit-profile";
             } else if(role.equals("COMPANY")) {
                 CompanyDTO company = companyMapper.map(companyService.getCompanyByEmail(email));
                 model.addAttribute("company", company);
-                return "dashboard-company";
+                return "dashboard-company-edit-profile";
             }
 
         }
 
         return "home";
     }
-    @PostMapping("/dashboard-candidate-edit-profile")
-    public String editProfile(Authentication authentication, @ModelAttribute CandidateDTO candidateDTO) {
-        if (authentication != null && authentication.isAuthenticated()) {
-            String email = authentication.getName();
-
-                Candidate existingCandidate = candidateService.getCandidateByEmail(email)
-            .withFirstName(candidateDTO.getFirstName())
-            .withLastName(candidateDTO.getLastName())
-            .withEmail(candidateDTO.getEmail())
-            .withSkills(candidateDTO.getSkills())
-            .withPhoneNumber(candidateDTO.getPhoneNumber())
-            .withAvailable(candidateDTO.getAvailable());
-
-                    candidateService.update(existingCandidate);
-                return "redirect:/dashboard";
-            }
-
-        return "redirect:/home";
-    }
 
 
-    @GetMapping("upload-image")
-    public String uploadImageForm(Authentication authentication, Model model) {
-        if (authentication != null && authentication.isAuthenticated()) {
-            String email = authentication.getName();
 
 
-                CandidateDTO candidate = candidateMapper.map(candidateService.getCandidateByEmail(email));
-                model.addAttribute("candidate", candidate);
-                return "upload-image";
-            }
 
-
-        return "home";
-    }
-    @PostMapping("upload-image")
-    public String uploadImagePost(
-            Authentication authentication,
-            @RequestParam("profileImage") MultipartFile imageFile) {
-        if (authentication != null && authentication.isAuthenticated()) {
-            String email = authentication.getName();
-
-            Candidate existingCandidate = candidateService.getCandidateByEmail(email);
-
-            candidateService.saveImage(imageFile, existingCandidate);
-            return "redirect:/dashboard";
-        }
-
-        return "redirect:/home";
-    }
 }

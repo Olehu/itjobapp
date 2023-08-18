@@ -19,4 +19,8 @@ public interface CompanyDAO {
 
 
     Optional<Company> findByEmail(String email);
+
+    Company update(Company existingCompany);
+
+    Company createByMail(String email);
 }

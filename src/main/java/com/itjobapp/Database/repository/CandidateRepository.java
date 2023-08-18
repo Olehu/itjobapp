@@ -20,7 +20,7 @@ public class CandidateRepository implements CandidateDAO {
     private final CandidateJpaRepository candidateJpaRepository;
     private final CandidateEntityMapper candidateEntityMapper;
     @Override
-    public List<CandidateEntity> getAllCompanies() {
+    public List<CandidateEntity> getAllCandidates() {
         return candidateJpaRepository.findAll();
     }
 
@@ -41,7 +41,10 @@ public class CandidateRepository implements CandidateDAO {
 
     @Override
     public Candidate createByMail(String email) {
-        CandidateEntity tosave = new CandidateEntity().builder().email(email).build();
+        CandidateEntity tosave = new CandidateEntity().builder()
+                .email(email)
+                .available(false)
+                .build();
         CandidateEntity saved = candidateJpaRepository.save(tosave);
         return candidateEntityMapper.mapFromEntity(saved);
 
@@ -58,8 +61,7 @@ public class CandidateRepository implements CandidateDAO {
                         .withLastName(existingCandidate.getLastName())
                         .withPhoneNumber(existingCandidate.getPhoneNumber())
                         .withSkills(existingCandidate.getSkills())
-                        .withAvailable(existingCandidate.getAvailable())
-                        .withProfileImage(existingCandidate.getProfileImage());
+                        .withAvailable(existingCandidate.getAvailable());
         CandidateEntity saved = candidateJpaRepository.save(toSave);
         return candidateEntityMapper.mapFromEntity(saved);
 
@@ -67,17 +69,32 @@ public class CandidateRepository implements CandidateDAO {
 
     @Override
     public Candidate saveImage(MultipartFile imageFile, Candidate existingCandidate) {
-        CandidateEntity search = candidateJpaRepository.findByEmail(existingCandidate.getEmail()).orElseThrow(()
-                -> new RuntimeException("Candidate not found"));
-
-        CandidateEntity saved = null;
-        try {
-            byte[] image = imageFile.getBytes();
-            saved = candidateJpaRepository.save(search.withProfileImage(image));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return candidateEntityMapper.mapFromEntity(saved);
-
+//        CandidateEntity search = candidateJpaRepository.findByEmail(existingCandidate.getEmail()).orElseThrow(()
+//                -> new RuntimeException("Candidate not found"));
+//
+//        CandidateEntity saved = null;
+//        try {
+////            byte[] image = com.image.fileupload.util.ImageUtil.compressImage(imageFile.getBytes());
+////            saved = candidateJpaRepository.save(search.withProfileImage(image));
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+        return null;
     }
+
+    @Override
+    public void setProfileImage(String imageName, String email) {
+        CandidateEntity search = candidateJpaRepository.findByEmail(email).orElseThrow(()
+                -> new RuntimeException("Candidate not found"));
+        candidateJpaRepository.save(search.withProfileImage(imageName));
+    }
+
+    @Override
+    public Optional<Candidate> findById(Integer candidateId) {
+        CandidateEntity search = candidateJpaRepository.findById(candidateId).orElseThrow(()
+                -> new RuntimeException("Candidate not found"));
+        return Optional.of(candidateEntityMapper.mapFromEntity(search));
+    }
+
+
 }

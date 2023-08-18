@@ -1,7 +1,10 @@
 package com.itjobapp.Security;
 
+import com.itjobapp.Database.entity.JobOfferEntity;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.Set;
 
 @Data
 @Builder
@@ -19,6 +22,9 @@ public class RoleEntity {
 
     @Column(name = "role")
     private String role;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "role")
+    private Set<UserEntity> users;
 
 }
 

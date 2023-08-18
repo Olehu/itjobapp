@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -24,22 +25,19 @@ public class JobAppUserDetailsService implements UserDetailsService {
     @Transactional
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         UserEntity user = userRepository.findByEmail(userName);
-        List<GrantedAuthority> authorities = getUserAuthority(user.getRoles());
-        return buildUserForAuthentication(user, authorities);
+        GrantedAuthority authority = getUserAuthority(user.getRole());
+        return buildUserForAuthentication(user, authority);
     }
 
-    private List<GrantedAuthority> getUserAuthority(Set<RoleEntity> userRoles) {
-        return userRoles.stream()
-                .map(role -> new SimpleGrantedAuthority(role.getRole()))
-                .distinct()
-                .collect(Collectors.toList());
+    private GrantedAuthority getUserAuthority(RoleEntity userRole) {
+        return new SimpleGrantedAuthority(userRole.getRole());
     }
 
-    private UserDetails buildUserForAuthentication(UserEntity user, List<GrantedAuthority> authorities) {
+    private UserDetails buildUserForAuthentication(UserEntity user, GrantedAuthority authority) {
         return new User(
                 user.getEmail(),
                 user.getPassword(),
-                authorities
+                Collections.singleton(authority)
         );
     }
 }

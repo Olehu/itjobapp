@@ -5,4 +5,5 @@ public interface UserService {
 
     boolean authenticateUser(String email, String password);
 
+    void updateEmail(String email);
 }

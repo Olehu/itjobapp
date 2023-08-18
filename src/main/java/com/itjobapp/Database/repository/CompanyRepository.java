@@ -1,5 +1,6 @@
 package com.itjobapp.Database.repository;
 
+import com.itjobapp.Database.entity.CandidateEntity;
 import com.itjobapp.Database.entity.CompanyEntity;
 import com.itjobapp.Database.entity.JobOfferEntity;
 import com.itjobapp.Database.repository.jpa.CompanyJpaRepository;
@@ -54,6 +55,29 @@ public class CompanyRepository implements CompanyDAO {
 
         Optional<CompanyEntity> companyEntity = companyJpaRepository.findByEmail(email);
         return companyEntity.map(companyEntityMapper::mapFromEntity);
+    }
+
+    @Override
+    public Company update(Company existingCompany) {
+        CompanyEntity search = companyJpaRepository.findByEmail(existingCompany.getEmail()).orElseThrow(()
+                -> new RuntimeException("Company not found"));
+
+        CompanyEntity toSave = search.withCompanyName(existingCompany.getCompanyName())
+                .withIndustry(existingCompany.getIndustry())
+                .withLocation(existingCompany.getLocation())
+                .withEmail(existingCompany.getEmail())
+                .withIsHiring(existingCompany.getIsHiring())
+                .withJobOffers(companyEntityMapper.mapToEntity(existingCompany).getJobOffers());
+
+        CompanyEntity saved = companyJpaRepository.save(toSave);
+        return companyEntityMapper.mapFromEntity(saved);
+    }
+
+    @Override
+    public Company createByMail(String email) {
+        CompanyEntity companyEntity = new CompanyEntity().withEmail(email);
+        CompanyEntity saved = companyJpaRepository.save(companyEntity);
+        return companyEntityMapper.mapFromEntity(saved);
     }
 
 

@@ -15,29 +15,55 @@
     <h1>Welcome to the Dashboard!</h1>
 
 
-
-    <div>
-        <div class="container mt-4">
-            <h2>Company Details</h2>
-            <div>
-                <p><strong>Name:</strong> <span th:text="${company.companyName}"></span></p>
-                <p><strong>Industry:</strong> <span th:text="${company.industry}"></span></p>
-                <p><strong>Location:</strong> <span th:text="${company.location}"></span></p>
-                <p><strong>Contact Email:</strong> <span th:text="${company.email}"></span></p>
-                <p><strong>Is Hiring:</strong> <span th:text="${company.isHiring ? 'Yes' : 'No'}"></span></p>
-            </div>
+    <div class="container mt-4">
+        <h2>Company Details</h2>
+        <div>
+            <p><strong>Name:</strong> <span th:text="${company.companyName}"></span></p>
+            <p><strong>Industry:</strong> <span th:text="${company.industry}"></span></p>
+            <p><strong>Location:</strong> <span th:text="${company.location}"></span></p>
+            <p><strong>Contact Email:</strong> <span th:text="${company.email}"></span></p>
+            <p><strong>Is Hiring:</strong> <span th:text="${company.isHiring ? 'Yes' : 'No'}"></span></p>
         </div>
+    </div>
 
-        <div class="container">
-            <div class="row mt-3">
-                <div class="col-md-4">
-                    <a th:href="@{/joboffer/new/{companyName}(companyName=${company.companyName})}" class="btn btn-primary">Create Job Offer</a>
-                </div>
+
+
+    <div class="container mt-4">
+        <h2>Job Offers</h2>
+        <div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Job Name</th>
+                    <th>Experience Level</th>
+                    <th>Other Requirements</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="jobOffer : ${jobOffers}">
+                    <td th:text="${jobOffer.name}"></td>
+                    <td th:text="${jobOffer.experienceLevel}"></td>
+                    <td th:text="${jobOffer.otherRequirements}"></td>
+                    <td th:text="${jobOffer.skills}"></td>
+                    <td><a th:href="@{/dashboard/joboffer/profile-view/{name}(name=${jobOffer.name})}" class="btn btn-primary">View</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    // TODO: Obsługa wyjątków: jesli firma nie ma nazwy, to wtedy uniemożliwć dodanie oferty pracy i komunikat, żeby uzupełnić profil
+
+    <div class="container">
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <td><a th:href="@{/joboffer/new/{companyName}(companyName=${company.companyName})}" class="btn btn-primary">Create Job Offer</a></td>
             </div>
         </div>
     </div>
+
     <div class="container mt-4">
-        <a href="/edit-profile" class="btn btn-primary">Edit Profile</a>
+        <a th:href="@{/edit-profile}" class="btn btn-info" role="button">Edit</a>
     </div>
 
 </div>

@@ -1,5 +1,6 @@
 package com.itjobapp.Controller.web;
 
+import com.itjobapp.Controller.dto.CompanyDTO;
 import com.itjobapp.Controller.dto.JobOfferDTO;
 import com.itjobapp.Controller.dto.mapper.CompanyMapper;
 import com.itjobapp.Controller.dto.mapper.JobOfferMapper;
@@ -12,6 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Set;
 
 @Controller
 @AllArgsConstructor
@@ -32,11 +36,22 @@ public class JobOfferControler {
 
 
     @GetMapping(value = "/joboffer")
-    public String jobOfferPage (Model model){
-        var allJobOffer = jobOfferService.getAllJobOffer().stream()
-                .map(jobOfferMapper::map)
-                .toList();
-        model.addAttribute("jobOffers", allJobOffer);
+    public String jobOfferPage (
+            @RequestParam(name = "experienceLevel", required = false) String experienceLevel,
+            @RequestParam(name = "skills", required = false) String skills,
+            Model model
+    ) {
+        List<JobOfferDTO> jobOffers;
+        if (experienceLevel != null || skills != null) {
+            jobOffers = jobOfferService.searchJobOffers(experienceLevel, skills).stream()
+                    .map(jobOfferMapper::map)
+                    .toList();
+        } else {
+            jobOffers = jobOfferService.getAllJobOffer().stream()
+                    .map(jobOfferMapper::map)
+                    .toList();
+        }
+        model.addAttribute("jobOffers", jobOffers);
         return "joboffer";
     }
 
@@ -85,6 +100,14 @@ public class JobOfferControler {
     }
 
 
+    @GetMapping(value = "/joboffer/profile/{name}")
+    public String showCompanyProfile(
+            @PathVariable String name, Model model) {
+        JobOfferDTO jobOffer = jobOfferMapper.map(jobOfferService.getJobOfferByName(name));
 
+
+        model.addAttribute("jobOffer", jobOffer);
+        return "joboffer-profile";
+    }
 
 }

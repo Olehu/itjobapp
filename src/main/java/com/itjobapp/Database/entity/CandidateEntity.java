@@ -32,9 +32,7 @@ public class CandidateEntity {
 
     @Column(name = "availability_status")
     private Boolean available;
-
     @Column(name = "profile_image")
-    @Lob
-    private byte[] profileImage;
+    private String profileImage;
 
 }

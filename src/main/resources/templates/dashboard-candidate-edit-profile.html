@@ -14,7 +14,7 @@
 <div class="container">
   <h1>Edit Profile</h1>
 
-  <form th:action="@{/dashboard-candidate-edit-profile}" th:object="${candidate}" method="post">
+  <form th:action="@{/dashboard/candidate-edit-profile}" th:object="${candidate}" method="post">
     <div class="mb-3">
       <label for="profileImage" class="form-label">Profile Image</label>
       <input type="file" class="form-control" id="profileImage" name="profileImage" th:field="*{profileImage}">

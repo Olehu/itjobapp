@@ -32,11 +32,13 @@ public class UserServiceImpl implements UserService{
         UserEntity user = new UserEntity().builder()
                 .email(email)
                 .password(passwordEncoderService.encode(password))
-                .roles(Collections.singleton(userRole.get()))
+                .role(userRole.get())
                 .build();
 
         if(role.toUpperCase().equals("CANDIDATE")) {
             candidateService.createCandidateByMail(email);
+        } else if(role.toUpperCase().equals("COMPANY")) {
+            companyService.createCompanyByMail(email);
         }
         userRepository.save(user);
     }
@@ -48,6 +50,13 @@ public class UserServiceImpl implements UserService{
             return passwordEncoderService.matches(password, user.get().getPassword());
         }
         return false;
+    }
+
+    @Override
+    public void updateEmail(String email) {
+        UserEntity user = userRepository.findByEmail(email);
+        user.setEmail(email);
+        userRepository.save(user);
     }
 }
 

@@ -9,7 +9,7 @@ import java.util.Optional;
 
 
 public interface CandidateDAO {
-    List<CandidateEntity> getAllCompanies();
+    List<CandidateEntity> getAllCandidates();
 
     Candidate create(Candidate candidate);
 
@@ -20,4 +20,8 @@ public interface CandidateDAO {
     Candidate update(Candidate existingCandidate);
 
     Candidate saveImage(MultipartFile imageFile, Candidate existingCandidate);
+
+    void setProfileImage(String imageName, String email);
+
+    Optional<Candidate> findById(Integer candidateId);
 }
