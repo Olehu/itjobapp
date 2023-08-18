@@ -1,5 +1,6 @@
 package com.itjobapp.Service.domain;
 
+import com.itjobapp.Database.entity.SkillsEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -8,18 +9,20 @@ import lombok.Builder;
 import lombok.Value;
 import lombok.With;
 
+import java.util.Set;
+
 @With
 @Value
 @Builder
 public class Candidate {
 
 
-    Integer candidateId;
     String firstName;
     String lastName;
     String email;
-    String skills;
     String phoneNumber;
-    Boolean available;
+    Boolean availabilityStatus;
+    String description;
     byte[] profileImage;
+    Set<Skills> skills;
 }

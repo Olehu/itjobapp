@@ -22,16 +22,23 @@ public class CompanyEntity {
     @Column(name = "company_id")
     private Integer companyId;
 
-    @Column(name = "company_name")
+    @Column(name = "company_name", nullable = false)
     private String companyName;
+
     @Column(name = "industry")
     private String industry;
-    @Column(name = "location")
-    private String location;
-    @Column(name = "email")
+
+    @Column(name = "city")
+    private String city;
+
+    @Column(name = "email", nullable = false)
     private String email;
+
     @Column(name = "is_hiring")
     private Boolean isHiring;
+
+    @Column(name = "description", length = 1000)
+    private String description;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "company")
     private Set<JobOfferEntity> jobOffers;

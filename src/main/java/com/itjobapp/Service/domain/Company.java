@@ -13,12 +13,12 @@ import java.util.Set;
 @NoArgsConstructor
 @Data
 public class Company {
-
     String companyName;
     String industry;
-    String location;
+    String city;
     String email;
     Boolean isHiring;
+    String description;
     Set<JobOffer> jobOffers;
 
     public Set<JobOffer> getJobOffers() {

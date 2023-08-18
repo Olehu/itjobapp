@@ -15,9 +15,10 @@ import java.util.Set;
 public class CompanyDTO {
     String companyName;
     String industry;
-    String location;
+    String city;
     String email;
     Boolean isHiring;
+    String description;
     Set<JobOfferDTO> jobOffers;
 
     public Set<JobOfferDTO> getJobOffers() {

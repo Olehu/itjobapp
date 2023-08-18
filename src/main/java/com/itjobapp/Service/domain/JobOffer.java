@@ -2,12 +2,14 @@ package com.itjobapp.Service.domain;
 
 import com.itjobapp.Database.entity.CompanyEntity;
 
+import com.itjobapp.Database.entity.SkillsEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Value;
 import lombok.With;
 
 import java.util.List;
+import java.util.Set;
 
 @Value
 @Builder
@@ -18,6 +20,8 @@ public class JobOffer {
     String name;
     String experienceLevel;
     String otherRequirements;
-    String skills;
+    String remote;
+    Set<Skills> skills;
     Company company;
+
 }

@@ -28,7 +28,7 @@ public interface JobOfferEntityMapper {
                 .company(CompanyEntity.builder()
                         .companyName(company.getCompanyName())
                         .industry(company.getIndustry())
-                        .location(company.getLocation())
+                        .city(company.getCity())
                         .email(company.getEmail())
                         .isHiring(company.getIsHiring())
                         .build())
