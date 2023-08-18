@@ -69,24 +69,23 @@ public class CandidateRepository implements CandidateDAO {
 
     @Override
     public Candidate saveImage(MultipartFile imageFile, Candidate existingCandidate) {
-//        CandidateEntity search = candidateJpaRepository.findByEmail(existingCandidate.getEmail()).orElseThrow(()
-//                -> new RuntimeException("Candidate not found"));
-//
-//        CandidateEntity saved = null;
-//        try {
-////            byte[] image = com.image.fileupload.util.ImageUtil.compressImage(imageFile.getBytes());
-////            saved = candidateJpaRepository.save(search.withProfileImage(image));
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-        return null;
+        CandidateEntity search = candidateJpaRepository.findByEmail(existingCandidate.getEmail()).orElseThrow(()
+                -> new RuntimeException("Candidate not found"));
+
+        try {
+
+            CandidateEntity save = candidateJpaRepository.save(search.withProfileImage(imageFile.getBytes()));
+            return candidateEntityMapper.mapFromEntity(save);
+        }catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void setProfileImage(String imageName, String email) {
         CandidateEntity search = candidateJpaRepository.findByEmail(email).orElseThrow(()
                 -> new RuntimeException("Candidate not found"));
-        candidateJpaRepository.save(search.withProfileImage(imageName));
+//        candidateJpaRepository.save(search.withProfileImage(imageName));
     }
 
     @Override

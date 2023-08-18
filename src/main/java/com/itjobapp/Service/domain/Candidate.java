@@ -21,5 +21,5 @@ public class Candidate {
     String skills;
     String phoneNumber;
     Boolean available;
-   String profileImage;
+    byte[] profileImage;
 }

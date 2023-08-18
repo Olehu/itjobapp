@@ -58,5 +58,12 @@ public class UserServiceImpl implements UserService{
         user.setEmail(email);
         userRepository.save(user);
     }
+
+    @Override
+    public String findRoleByMail(String email) {
+        return userRepository.findByEmail(email).getRole().getRole();
+    }
+
+
 }
 
