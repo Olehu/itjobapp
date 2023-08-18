@@ -29,7 +29,12 @@
     <p><strong>Name:</strong> <span th:text="${jobOffer.name}"></span></p>
     <p><strong>Experience Level:</strong> <span th:text="${jobOffer.experienceLevel}"></span></p>
     <p><strong>Other Requirements:</strong> <span th:text="${jobOffer.otherRequirements}"></span></p>
-    <p><strong>Required skills:</strong> <span th:text="${jobOffer.skills}"></span></p>
+    <p><strong>Skills:</strong>
+    <ul>
+      <li th:each="skill : ${jobOffer.skills}" th:text="${skill.skillName}"></li>
+    </ul>
+    </p>
+    <p><strong>Company:</strong> <span th:text="${jobOffer.company.companyName}"></span></p>
   </div>
 </div>
 <div class="container mt-4">

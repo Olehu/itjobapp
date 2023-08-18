@@ -32,6 +32,8 @@ public class CandidateEntity {
 
     @Column(name = "phone_number")
     private String phoneNumber;
+    @Column(name = "experience_level")
+    private String experiencelevel;
 
     @Column(name = "availability_status")
     private Boolean availabilityStatus;

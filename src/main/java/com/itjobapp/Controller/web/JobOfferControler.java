@@ -38,12 +38,13 @@ public class JobOfferControler {
     @GetMapping(value = "/joboffer")
     public String jobOfferPage (
             @RequestParam(name = "experienceLevel", required = false) String experienceLevel,
-            @RequestParam(name = "skills", required = false) String skills,
+            @RequestParam(name = "remote", required = false) String remote,
+            @RequestParam(name = "skills", required = false) Set<String> skills,
             Model model
     ) {
         List<JobOfferDTO> jobOffers;
-        if (experienceLevel != null || skills != null) {
-            jobOffers = jobOfferService.searchJobOffers(experienceLevel, skills).stream()
+        if (experienceLevel != null || remote != null || skills != null) {
+            jobOffers = jobOfferService.searchJobOffers(experienceLevel, remote, skills).stream()
                     .map(jobOfferMapper::map)
                     .toList();
         } else {
@@ -51,6 +52,7 @@ public class JobOfferControler {
                     .map(jobOfferMapper::map)
                     .toList();
         }
+        model.addAttribute("allSkills", ServiceController.getAllSkills());
         model.addAttribute("jobOffers", jobOffers);
         return "joboffer";
     }

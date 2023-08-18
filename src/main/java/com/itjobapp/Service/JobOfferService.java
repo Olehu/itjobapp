@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -50,7 +51,7 @@ public class JobOfferService {
         jobOfferDao.delete(name);
     }
 
-    public List<JobOffer> searchJobOffers(String experienceLevel, String skills) {
+    public List<JobOffer> searchJobOffers(String experienceLevel, String remote, Set<String> skills) {
 
         List<JobOfferEntity> jobOffers = jobOfferDao.getAllJobOffer();
 
@@ -62,8 +63,12 @@ public class JobOfferService {
                         matches = jobOfferEntity.getExperienceLevel().equalsIgnoreCase(experienceLevel);
                     }
 
+                    if (remote != null && !remote.isEmpty()) {
+                        matches = jobOfferEntity.getRemote().equalsIgnoreCase(remote);
+                    }
+
                     if (skills != null && !skills.isEmpty()) {
-                        matches = jobOfferEntity.getSkills().contains(skills);
+                        matches = skills.stream().anyMatch(skill -> jobOfferEntity.getSkills().contains(skill));
                     }
 
                     return matches;

@@ -44,7 +44,7 @@ public class CandidateDashboardController {
                     .withEmail(candidateDTO.getEmail())
                     .withSkills(candidateDTO.getSkills())
                     .withPhoneNumber(candidateDTO.getPhoneNumber())
-                    .withAvailable(candidateDTO.getAvailable());
+                    .withAvailable(candidateDTO.getAvailabilityStatus());
 
 
             candidateService.update(existingCandidate);

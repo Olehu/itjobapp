@@ -31,17 +31,21 @@
         <p><strong>First Name:</strong> <span th:text="${candidate.firstName}"></span></p>
         <p><strong>Last Name:</strong> <span th:text="${candidate.lastName}"></span></p>
         <p><strong>Email:</strong> <span th:text="${candidate.email}"></span></p>
-        <p><strong>Skills:</strong> <span th:text="${candidate.skills}"></span></p>
+        <p><strong>Skills:</strong>
+        <ul>
+            <li th:each="skill : ${candidate.skills}" th:text="${skill.skillName}"></li>
+        </ul>
+        </p>
         <p><strong>Phone Number:</strong> <span th:text="${candidate.phoneNumber}"></span></p>
-        <p><strong>Availability Status:</strong> <span th:text="${candidate.available}"></span></p>
-        <form th:if="${isCompany and candidate.available}"
+        <p><strong>Availability Status:</strong> <span th:text="${candidate.availabilityStatus}"></span></p>
+        <form th:if="${isCompany and candidate.availabilityStatus}"
               th:action="@{/hire/{candidateEmail}(candidateEmail=${candidate.email})}" method="post">
             <button type="submit" class="btn btn-primary">Hire</button>
         </form>
-
-
+        <p><strong>Description:</strong> <span th:text="${candidate.description}"></span></p>
     </div>
 </div>
+
 
 
 <div class="container">

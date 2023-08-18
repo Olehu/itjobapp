@@ -80,6 +80,7 @@ public class DashboardController {
 
             if(role.equals("CANDIDATE")) {
                 CandidateDTO candidate = candidateMapper.map(candidateService.findCandidateByEmail(email));
+                model.addAttribute("allSkills", ServiceController.getAllSkills());
                 model.addAttribute("candidate", candidate);
                 return "dashboard-candidate-edit-profile";
             } else if(role.equals("COMPANY")) {

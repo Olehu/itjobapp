@@ -58,7 +58,7 @@ public class CompanyService {
                     boolean matches = true;
 
                     if (location != null && !location.isEmpty()) {
-                        matches = companyEntity.getLocation().equalsIgnoreCase(location);
+                        matches = companyEntity.getCity().equalsIgnoreCase(location);
                     }
 
                     if (isHiring != null) {

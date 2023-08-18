@@ -51,13 +51,20 @@
                 <th>Job Name</th>
                 <th>Experience Level</th>
                 <th>Other Requirements</th>
+                <th>Skills</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="jobOffer : ${company.jobOffers}">
+            <tr th:each="jobOffer : ${jobOffers}">
                 <td th:text="${jobOffer.name}"></td>
                 <td th:text="${jobOffer.experienceLevel}"></td>
                 <td th:text="${jobOffer.otherRequirements}"></td>
+                <td>
+                    <ul>
+                        <li th:each="skill : ${jobOffer.skills}" th:text="${skill.skillName}"></li>
+                    </ul>
+                </td>
+                <td><a th:href="@{/dashboard/joboffer/profile-view/{name}(name=${jobOffer.name})}" class="btn btn-primary">View</a></td>
             </tr>
             </tbody>
         </table>

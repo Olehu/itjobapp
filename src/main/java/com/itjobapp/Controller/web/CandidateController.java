@@ -5,6 +5,7 @@ import com.itjobapp.Controller.dto.mapper.CandidateMapper;
 import com.itjobapp.Security.UserService;
 import com.itjobapp.Service.CandidateService;
 import com.itjobapp.Service.CompanyService;
+import com.itjobapp.Service.SkillList;
 import com.itjobapp.Service.domain.Candidate;
 import com.itjobapp.Service.domain.Company;
 import lombok.AllArgsConstructor;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @AllArgsConstructor
 @Controller
@@ -30,13 +32,13 @@ public class CandidateController {
 
     @GetMapping(value = "/candidate")
     public String candidatePage(
-            @RequestParam(name = "skills", required = false) String skills,
-            @RequestParam(name = "available", required = false) Boolean available,
+            @RequestParam(name = "availabilityStatus", required = false) Boolean availabilityStatus,
+            @RequestParam(name = "skills", required = false) Set<String> skills,
             Model model
     ) {
         List<CandidateDTO> candidates;
-        if (skills != null || available != null) {
-            candidates = candidateService.searchCandidates(skills, available).stream()
+        if (availabilityStatus != null || skills != null) {
+            candidates = candidateService.searchCandidates(availabilityStatus, skills).stream()
                     .map(candidateMapper::map)
                     .toList();
         } else {
@@ -44,13 +46,16 @@ public class CandidateController {
                     .map(candidateMapper::map)
                     .toList();
         }
+
         model.addAttribute("candidates", candidates);
+        model.addAttribute("allSkills", ServiceController.getAllSkills());
         return "candidate";
     }
 
 
     @GetMapping(value = "/candidate/new")
     public String showCandidateForm(Model model) {
+        model.addAttribute("allSkills", ServiceController.getAllSkills());
         model.addAttribute("candidate", new CandidateDTO());
         return "candidate-form";
     }
@@ -92,7 +97,7 @@ public class CandidateController {
     public String hireCandidate(@PathVariable String candidateEmail) {
         Candidate candidate = candidateService.findCandidateByEmail(candidateEmail);
         if (candidate != null) {
-            candidate = candidate.withAvailable(false);
+            candidate = candidate.withAvailabilityStatus(false);
             candidateService.update(candidate);
         }
         return "redirect:/candidate/{candidateEmail}";

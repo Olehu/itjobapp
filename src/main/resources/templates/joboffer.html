@@ -18,11 +18,27 @@
 <form th:action="@{/joboffer}" method="get">
     <div class="mb-3">
         <label for="experienceLevel" class="form-label">Search by Experience Level:</label>
-        <input type="text" class="form-control" id="experienceLevel" name="experienceLevel" placeholder="Enter experience level">
+        <select class="form-select" id="experienceLevel" name="experienceLevel">
+            <option value="">Any</option>
+            <option value="junior">Junior</option>
+            <option value="mid">Mid</option>
+            <option value="senior">Senior</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="remote" class="form-label">Search by Remote:</label>
+        <select class="form-select" id="remote" name="remote">
+            <option value="">Any</option>
+            <option value="remote">Remote</option>
+            <option value="hybrid">Hybrid</option>
+            <option value="stationary">Stationary</option>
+        </select>
     </div>
     <div class="mb-3">
         <label for="skills" class="form-label">Search by Skills:</label>
-        <input type="text" class="form-control" id="skills" name="skills" placeholder="Enter skills">
+        <select class="form-select" id="skills" name="skills" multiple="multiple">
+            <option th:each="skill : ${allSkills}" th:value="${skill}" th:text="${skill}"></option>
+        </select>
     </div>
     <button type="submit" class="btn btn-primary">Search</button>
 </form>
@@ -52,6 +68,7 @@
 
 <div class="container mt-4">
     <h2>All Job Offers</h2>
+
     <table class="table table-striped">
         <thead>
         <tr>
@@ -68,10 +85,13 @@
             <td th:text="${jobOffer.name}"></td>
             <td th:text="${jobOffer.experienceLevel}"></td>
             <td th:text="${jobOffer.otherRequirements}"></td>
-            <td th:text="${jobOffer.skills}"></td>
+            <td>
+                <ul>
+                    <li th:each="skill : ${jobOffer.skills}" th:text="${skill.skillName}"></li>
+                </ul>
+            </td>
             <td th:text="${jobOffer.company.companyName}"></td>
             <td><a th:href="@{/joboffer/profile/{name}(name=${jobOffer.name})}" class="btn btn-primary">View</a></td>
-
         </tr>
         </tbody>
     </table>

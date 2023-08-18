@@ -21,6 +21,7 @@ public class Candidate {
     String lastName;
     String email;
     String phoneNumber;
+    String experiencelevel;
     Boolean availabilityStatus;
     String description;
     byte[] profileImage;

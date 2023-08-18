@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -52,8 +53,7 @@ public class CandidateService {
         candidateDao.setProfileImage(imageName, email);
     }
 
-    public List<Candidate> searchCandidates(String skills, Boolean available) {
-
+    public List<Candidate> searchCandidates(Set<String> skills, Boolean available) {
 
         List<CandidateEntity> candidates = candidateDao.getAllCandidates();
 
@@ -62,19 +62,22 @@ public class CandidateService {
                     boolean matches = true;
 
                     if (skills != null && !skills.isEmpty() && candidateEntity.getSkills() != null) {
-                        matches = candidateEntity.getSkills().toLowerCase().contains(skills.toLowerCase());
+                        matches = candidateEntity.getSkills().stream()
+                                .anyMatch(skill -> skills.contains(skill.getSkillName()));
                     }
 
                     if (available != null){
-                        matches = matches && candidateEntity.getAvailable().equals(available);
+                        matches = matches && candidateEntity.getAvailabilityStatus().equals(available);
                     }
 
                     return matches;
                 })
                 .map(candidateEntityMapper::mapFromEntity)
                 .collect(Collectors.toList());
-    return collect;
+
+        return collect;
     }
+
 
     public Candidate getCandidateById(Integer candidateId) {
         return candidateDao.findById(candidateId)

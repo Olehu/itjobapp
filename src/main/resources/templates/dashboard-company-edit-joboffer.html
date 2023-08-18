@@ -28,9 +28,13 @@
     <textarea class="form-control" id="otherRequirements" th:field="*{otherRequirements}" placeholder="Enter other requirements"></textarea>
   </div>
   <div class="mb-3">
-    <label for="skills" class="form-label">Skills:</label>
-    <textarea class="form-control" id="skills" th:field="*{skills}" placeholder="Enter skills:"></textarea>
+    <label for="skills" class="form-label">Skills</label>
+    <select class="form-control" id="skills" th:field="*{skills}" multiple>
+      <option th:each="skill : ${allSkills}" th:value="${skill}" th:text="${skill.skillName}"></option>
+    </select>
+    </ul>
   </div>
+
 
 
   <button type="submit">Confirm</button>

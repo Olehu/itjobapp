@@ -77,7 +77,7 @@ public class CompanyDashboardController {
             String email = authentication.getName();
             if (email.equals(jobOfferService.getJobOfferByName(name).getCompany().getEmail())) {
                 JobOfferDTO jobOfferDTO = jobOfferMapper.map(jobOfferService.getJobOfferByName(name));
-
+                model.addAttribute("allSkills", ServiceController.getAllSkills());
                 model.addAttribute("jobOfferDTO", jobOfferDTO);
                 return "dashboard-company-edit-joboffer";
             }

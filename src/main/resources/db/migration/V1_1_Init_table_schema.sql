@@ -15,10 +15,11 @@ CREATE TABLE candidate (
                            first_name VARCHAR(40),
                            last_name VARCHAR(40),
                            email VARCHAR(100) NOT NULL,
+                           experience_level VARCHAR(30),
                            skills VARCHAR(255),
                            phone_number VARCHAR(20),
                            availability_status BOOLEAN,
-                           description VARCHAR(1000),"
+                           description VARCHAR(1000),
                            profile_image BYTEA,
                            unique (email),
                            PRIMARY KEY (candidate_id)

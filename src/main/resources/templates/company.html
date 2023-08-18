@@ -65,8 +65,7 @@
         <tr>
             <th>Company Name</th>
             <th>Industry</th>
-            <th>Location</th>
-            <th>Contact Email</th>
+            <th>City</th>
             <th>Is Hiring</th>
             <th>View</th>
         </tr>
@@ -75,16 +74,14 @@
         <tr th:each="company : ${companies}">
             <td th:text="${company.companyName}"></td>
             <td th:text="${company.industry}"></td>
-            <td th:text="${company.location}"></td>
-            <td th:text="${company.email}"></td>
-            <td th:text="${company.isHiring}"></td>
+            <td th:text="${company.city}"></td>
+            <td th:text="${company.isHiring ? 'Yes' : 'No'}"></td>
             <td><a th:href="@{/company/profile/{companyName}(companyName=${company.companyName})}" class="btn btn-primary">View</a></td>
-
-            <td><a th:href="@{'/company/profile/' + company.companyName}">View</a></td>
         </tr>
         </tbody>
     </table>
 </div>
+
 
 </body>
 </html>

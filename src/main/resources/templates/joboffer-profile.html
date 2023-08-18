@@ -24,13 +24,17 @@
 </div>
 
 <div class="container mt-4">
-    <h2>Company Details</h2>
+    <h2>JobOffer Details</h2>
     <div>
         <p><strong>Name:</strong> <span th:text="${jobOffer.name}"></span></p>
         <p><strong>Experience Level:</strong> <span th:text="${jobOffer.experienceLevel}"></span></p>
         <p><strong>Other Requirements:</strong> <span th:text="${jobOffer.otherRequirements}"></span></p>
-        <p><strong>Skills:</strong> <span th:text="${jobOffer.skills}"></span></p>
-        <p><strong>Company:</strong> <span th:text="${jobOffer.company.getCompanyName()}"></span></p>
+        <p><strong>Skills:</strong>
+        <ul>
+            <li th:each="skill : ${jobOffer.skills}" th:text="${skill.skillName}"></li>
+        </ul>
+        </p>
+        <p><strong>Company:</strong> <span th:text="${jobOffer.company.companyName}"></span></p>
     </div>
 </div>
 

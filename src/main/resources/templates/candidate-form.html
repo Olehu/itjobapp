@@ -26,15 +26,21 @@
     <br>
 
     <label for="skills">Skills:</label>
-    <input type="text" id="skills" th:field="*{skills}">
+    <select id="skills" th:field="*{skills}" multiple>
+        <option th:each="skill : ${allSkills}" th:value="${skill}" th:text="${skill.skillName}"></option>
+    </select>
     <br>
 
     <label for="phoneNumber">Phone Number:</label>
     <input type="text" id="phoneNumber" th:field="*{phoneNumber}">
     <br>
 
-    <label for="available">Availability Status:</label>
-    <input type="checkbox" id="available" th:field="*{available}">
+    <label for="availabilityStatus">Availability Status:</label>
+    <input type="checkbox" id="availabilityStatus" th:field="*{availabilityStatus}">
+    <br>
+
+    <label for="description">Description:</label>
+    <textarea id="description" th:field="*{description}"></textarea>
     <br>
 
     <button type="submit">Create</button>

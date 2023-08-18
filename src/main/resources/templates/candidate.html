@@ -17,19 +17,22 @@
 
 <form th:action="@{/candidate}" method="get">
     <div class="mb-3">
-        <label class="form-label">Skills:</label>
-        <input type="text" class="form-control" name="skills">
+        <label class="form-check-label">Availability:</label>
+        <select class="form-select" name="availabilityStatus">
+            <option value="">All</option>
+            <option value="true">Available</option>
+            <option value="false">Not Available</option>
+        </select>
     </div>
     <div class="mb-3">
-        <label class="form-check-label">Available:</label>
-        <select class="form-select" name="available">
-            <option value="">All</option>
-            <option value="true">Yes</option>
-            <option value="false">No</option>
+        <label class="form-label">Skills:</label>
+        <select class="form-select" multiple name="skills">
+            <option th:each="skill : ${allSkills}" th:value="${skill.skillName}" th:text="${skill.skillName}"></option>
         </select>
     </div>
     <button type="submit" class="btn btn-primary">Search</button>
 </form>
+
 
 
 <div class="container">
@@ -58,9 +61,7 @@
         <tr>
             <th>First Name</th>
             <th>Last Name</th>
-            <th>Email</th>
             <th>Skills</th>
-            <th>Phone Number</th>
             <th>Availability Status</th>
             <th>View</th>
         </tr>
@@ -69,10 +70,12 @@
         <tr th:each="candidate : ${candidates}">
             <td th:text="${candidate.firstName}"></td>
             <td th:text="${candidate.lastName}"></td>
-            <td th:text="${candidate.email}"></td>
-            <td th:text="${candidate.skills}"></td>
-            <td th:text="${candidate.phoneNumber}"></td>
-            <td th:text="${candidate.available}"></td>
+            <td>
+                <ul>
+                    <li th:each="skill : ${candidate.skills}" th:text="${skill.skillName}"></li>
+                </ul>
+            </td>
+            <td th:text="${candidate.availabilityStatus}"></td>
             <td><a th:href="@{/candidate/profile/{email}(email=${candidate.email})}" class="btn btn-primary">View</a></td>
         </tr>
         </tbody>

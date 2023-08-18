@@ -15,10 +15,7 @@
   <h1>Edit Profile</h1>
 
   <form th:action="@{/dashboard/candidate-edit-profile}" th:object="${candidate}" method="post">
-    <div class="mb-3">
-      <label for="profileImage" class="form-label">Profile Image</label>
-      <input type="file" class="form-control" id="profileImage" name="profileImage" th:field="*{profileImage}">
-    </div>
+
 
     <div class="mb-3">
       <label for="firstName" class="form-label">First Name</label>
@@ -34,15 +31,21 @@
     </div>
     <div class="mb-3">
       <label for="skills" class="form-label">Skills</label>
-      <input type="text" class="form-control" id="skills" th:field="*{skills}">
+      <select class="form-control" id="skills" th:field="*{skills}" multiple>
+        <option th:each="skill : ${allSkills}" th:value="${skill}" th:text="${skill.skillName}"></option>
+      </select>
     </div>
     <div class="mb-3">
       <label for="phoneNumber" class="form-label">Phone Number</label>
       <input type="text" class="form-control" id="phoneNumber" th:field="*{phoneNumber}">
     </div>
+    <div class="mb-3 form-check">
+      <input type="checkbox" class="form-check-input" id="availabilityStatus" th:field="*{availabilityStatus}">
+      <label class="form-check-label" for="availabilityStatus">Availability Status</label>
+    </div>
     <div class="mb-3">
-      <label for="available" class="form-label">Availability Status</label>
-      <input type="checkbox" class="form-check-input" id="available" th:field="*{available}">
+      <label for="description" class="form-label">Description</label>
+      <textarea class="form-control" id="description" th:field="*{description}"></textarea>
     </div>
 
     <button type="submit" class="btn btn-primary">Save Changes</button>

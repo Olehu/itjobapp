@@ -13,7 +13,6 @@
 <h1>Edit Company</h1>
 
 <form th:action="@{/dashboard/company-edit-profile}" th:object="${company}" method="post">
-  <label for="companyName">Company Name:</label>
   <input type="text" id="companyName" th:field="*{companyName}" required>
   <br>
 
@@ -21,8 +20,8 @@
   <input type="text" id="industry" th:field="*{industry}">
   <br>
 
-  <label for="location">Location:</label>
-  <input type="text" id="location" th:field="*{location}">
+  <label for="city">City:</label>
+  <input type="text" id="city" th:field="*{city}">
   <br>
 
   <label for="email">Email:</label>
@@ -33,7 +32,9 @@
   <input type="checkbox" id="isHiring" th:field="*{isHiring}">
   <br>
 
-  <button type="submit">Confirm</button>
+  <label for="description">Description:</label>
+  <textarea id="description" th:field="*{description}"></textarea>
+  <br>
 </form>
 
 
