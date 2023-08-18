@@ -3,6 +3,7 @@ package com.itjobapp.Service.domain;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Lob;
 import lombok.Builder;
 import lombok.Value;
 import lombok.With;
@@ -19,6 +20,6 @@ public class Candidate {
     String email;
     String skills;
     String phoneNumber;
-    String availabilityStatus;
-
+    Boolean available;
+    byte[] profileImage;
 }

@@ -15,6 +15,19 @@
     <h1>Job Offer!</h1>
 </div>
 
+<form th:action="@{/joboffer}" method="get">
+    <div class="mb-3">
+        <label for="experienceLevel" class="form-label">Search by Experience Level:</label>
+        <input type="text" class="form-control" id="experienceLevel" name="experienceLevel" placeholder="Enter experience level">
+    </div>
+    <div class="mb-3">
+        <label for="skills" class="form-label">Search by Skills:</label>
+        <input type="text" class="form-control" id="skills" name="skills" placeholder="Enter skills">
+    </div>
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
+
 <div class="container">
     <div class="row mt-3">
         <div class="col-md-4">
@@ -45,7 +58,9 @@
             <th>Name</th>
             <th>Experience Level</th>
             <th>Other Requirements</th>
+            <th>Skills</th>
             <th>Company</th>
+            <th>View</th>
         </tr>
         </thead>
         <tbody>
@@ -53,7 +68,10 @@
             <td th:text="${jobOffer.name}"></td>
             <td th:text="${jobOffer.experienceLevel}"></td>
             <td th:text="${jobOffer.otherRequirements}"></td>
+            <td th:text="${jobOffer.skills}"></td>
             <td th:text="${jobOffer.company.companyName}"></td>
+            <td><a th:href="@{/joboffer/profile/{name}(name=${jobOffer.name})}" class="btn btn-primary">View</a></td>
+
         </tr>
         </tbody>
     </table>

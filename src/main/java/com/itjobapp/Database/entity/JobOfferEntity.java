@@ -11,6 +11,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@With
 @Table(name = "job_offer")
 public class JobOfferEntity {
     @Id
@@ -25,7 +26,8 @@ public class JobOfferEntity {
     private String experienceLevel;
     @Column(name = "other_requirements")
     private String otherRequirements;
-
+    @Column(name = "skills")
+    private String skills;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
     private CompanyEntity company;

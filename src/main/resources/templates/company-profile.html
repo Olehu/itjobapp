@@ -34,6 +34,35 @@
     </div>
 </div>
 
+<div class="container">
+    <div class="row mt-3">
+        <div class="col-md-4">
+            <a th:href="@{/joboffer/new/{companyName}(companyName=${company.companyName})}" class="btn btn-primary">Create Job Offer</a>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-4">
+    <h2>Job Offers</h2>
+    <div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Job Name</th>
+                <th>Experience Level</th>
+                <th>Other Requirements</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="jobOffer : ${company.jobOffers}">
+                <td th:text="${jobOffer.name}"></td>
+                <td th:text="${jobOffer.experienceLevel}"></td>
+                <td th:text="${jobOffer.otherRequirements}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 
 
 <div class="container">

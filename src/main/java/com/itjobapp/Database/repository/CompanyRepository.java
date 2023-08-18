@@ -1,11 +1,16 @@
 package com.itjobapp.Database.repository;
 
+import com.itjobapp.Database.entity.CandidateEntity;
 import com.itjobapp.Database.entity.CompanyEntity;
+import com.itjobapp.Database.entity.JobOfferEntity;
 import com.itjobapp.Database.repository.jpa.CompanyJpaRepository;
 import com.itjobapp.Database.repository.mapper.CompanyEntityMapper;
+import com.itjobapp.Database.repository.mapper.JobOfferEntityMapper;
 import com.itjobapp.Service.dao.CompanyDAO;
 import com.itjobapp.Service.domain.Company;
+import com.itjobapp.Service.domain.JobOffer;
 import lombok.AllArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,6 +23,8 @@ public class CompanyRepository implements CompanyDAO {
 
     private final CompanyEntityMapper companyEntityMapper;
     private final CompanyJpaRepository companyJpaRepository;
+
+    private final JobOfferEntityMapper  jobOfferEntityMapper;
     @Override
     public Company create(Company company) {
 
@@ -44,7 +51,34 @@ public class CompanyRepository implements CompanyDAO {
     }
 
     @Override
-    public Integer findIdByName(Company company) {
-        return companyJpaRepository.findIdByName(company.getCompanyName());
+    public Optional<Company> findByEmail(String email) {
+
+        Optional<CompanyEntity> companyEntity = companyJpaRepository.findByEmail(email);
+        return companyEntity.map(companyEntityMapper::mapFromEntity);
     }
+
+    @Override
+    public Company update(Company existingCompany) {
+        CompanyEntity search = companyJpaRepository.findByEmail(existingCompany.getEmail()).orElseThrow(()
+                -> new RuntimeException("Company not found"));
+
+        CompanyEntity toSave = search.withCompanyName(existingCompany.getCompanyName())
+                .withIndustry(existingCompany.getIndustry())
+                .withLocation(existingCompany.getLocation())
+                .withEmail(existingCompany.getEmail())
+                .withIsHiring(existingCompany.getIsHiring())
+                .withJobOffers(companyEntityMapper.mapToEntity(existingCompany).getJobOffers());
+
+        CompanyEntity saved = companyJpaRepository.save(toSave);
+        return companyEntityMapper.mapFromEntity(saved);
+    }
+
+    @Override
+    public Company createByMail(String email) {
+        CompanyEntity companyEntity = new CompanyEntity().withEmail(email);
+        CompanyEntity saved = companyJpaRepository.save(companyEntity);
+        return companyEntityMapper.mapFromEntity(saved);
+    }
+
+
 }

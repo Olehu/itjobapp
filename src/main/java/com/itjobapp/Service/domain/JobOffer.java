@@ -18,5 +18,6 @@ public class JobOffer {
     String name;
     String experienceLevel;
     String otherRequirements;
+    String skills;
     Company company;
 }
