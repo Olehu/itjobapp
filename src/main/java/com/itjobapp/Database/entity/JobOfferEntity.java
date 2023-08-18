@@ -6,6 +6,7 @@ import lombok.*;
 @Getter
 @Setter
 @EqualsAndHashCode(of = "jobOfferId")
+@ToString
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

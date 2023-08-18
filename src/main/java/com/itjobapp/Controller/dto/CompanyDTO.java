@@ -13,7 +13,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CompanyDTO {
-    Integer companyId;
     String companyName;
     String industry;
     String location;
