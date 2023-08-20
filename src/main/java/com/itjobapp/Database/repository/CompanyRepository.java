@@ -45,15 +45,9 @@ public class CompanyRepository implements CompanyDAO {
         Optional<CompanyEntity> companyEntity = companyJpaRepository.findByCompanyName(companyName);
         return companyEntity.map(companyEntityMapper::mapFromEntity);    }
 
-    @Override
-    public Optional<Company> findById(Integer companyId) {
-        Optional<CompanyEntity> companyEntity = companyJpaRepository.findById(companyId);
-        return companyEntity.map(companyEntityMapper::mapFromEntity);
-    }
 
     @Override
     public Optional<Company> findByEmail(String email) {
-
         Optional<CompanyEntity> companyEntity = companyJpaRepository.findByEmail(email);
         return companyEntity.map(companyEntityMapper::mapFromEntity);
     }
@@ -76,8 +70,8 @@ public class CompanyRepository implements CompanyDAO {
 
     @Override
     public Company createByMail(String email) {
-        CompanyEntity companyEntity = new CompanyEntity().withEmail(email);
-        CompanyEntity saved = companyJpaRepository.save(companyEntity);
+        CompanyEntity toSave = new CompanyEntity().withEmail(email);
+        CompanyEntity saved = companyJpaRepository.save(toSave);
         return companyEntityMapper.mapFromEntity(saved);
     }
 

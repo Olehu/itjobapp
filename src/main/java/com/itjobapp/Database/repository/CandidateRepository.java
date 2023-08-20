@@ -35,8 +35,9 @@ public class CandidateRepository implements CandidateDAO {
 
     @Override
     public Candidate create(Candidate candidate) {
+        Set<SkillsEntity> skillsEntities = skillsCreation(candidate);
         CandidateEntity toSave = candidateEntityMapper.mapToEntity(candidate);
-        CandidateEntity saved = candidateJpaRepository.save(toSave);
+        CandidateEntity saved = candidateJpaRepository.save(toSave.withSkills(skillsEntities));
         Candidate newCandidate = candidateEntityMapper.mapFromEntity(saved);
         return newCandidate;
     }
@@ -64,17 +65,7 @@ public class CandidateRepository implements CandidateDAO {
         CandidateEntity search = candidateJpaRepository.findByEmail(existingCandidate.getEmail()).orElseThrow(()
                 -> new RuntimeException("Candidate not found"));
 
-        Set<Skills> skills = existingCandidate.getSkills();
-        skills.stream()
-                .forEach(a -> {
-                    if (skillsJpaRepository.searchBySkillName(a.getSkillName()).isEmpty()) {
-                        skillsJpaRepository.save(SkillsEntity.builder().skillName(a.getSkillName()).build());
-                    }
-                });
-
-        Set<SkillsEntity> skillsEntityStream = skills.stream()
-                .map(skill -> skillsJpaRepository.searchBySkillName(skill.getSkillName()).get())
-                .collect(Collectors.toSet());
+        Set<SkillsEntity> skillsEntityStream = skillsCreation(existingCandidate);
 
 
         CandidateEntity toSave =
@@ -89,6 +80,21 @@ public class CandidateRepository implements CandidateDAO {
 
     }
 
+    private Set<SkillsEntity> skillsCreation(Candidate existingCandidate) {
+        Set<Skills> skills = existingCandidate.getSkills();
+        skills.stream()
+                .forEach(a -> {
+                    if (skillsJpaRepository.searchBySkillName(a.getSkillName()).isEmpty()) {
+                        skillsJpaRepository.save(SkillsEntity.builder().skillName(a.getSkillName()).build());
+                    }
+                });
+
+        Set<SkillsEntity> skillsEntityStream = skills.stream()
+                .map(skill -> skillsJpaRepository.searchBySkillName(skill.getSkillName()).get())
+                .collect(Collectors.toSet());
+        return skillsEntityStream;
+    }
+
     @Override
     public Candidate saveImage(MultipartFile imageFile, Candidate existingCandidate) {
         CandidateEntity search = candidateJpaRepository.findByEmail(existingCandidate.getEmail()).orElseThrow(()
@@ -101,20 +107,6 @@ public class CandidateRepository implements CandidateDAO {
         }catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    @Override
-    public void setProfileImage(String imageName, String email) {
-        CandidateEntity search = candidateJpaRepository.findByEmail(email).orElseThrow(()
-                -> new RuntimeException("Candidate not found"));
-//        candidateJpaRepository.save(search.withProfileImage(imageName));
-    }
-
-    @Override
-    public Optional<Candidate> findById(Integer candidateId) {
-        CandidateEntity search = candidateJpaRepository.findById(candidateId).orElseThrow(()
-                -> new RuntimeException("Candidate not found"));
-        return Optional.of(candidateEntityMapper.mapFromEntity(search));
     }
 
 

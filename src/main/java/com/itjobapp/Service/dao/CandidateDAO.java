@@ -21,7 +21,5 @@ public interface CandidateDAO {
 
     Candidate saveImage(MultipartFile imageFile, Candidate existingCandidate);
 
-    void setProfileImage(String imageName, String email);
 
-    Optional<Candidate> findById(Integer candidateId);
 }

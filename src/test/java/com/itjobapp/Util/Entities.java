@@ -1,5 +1,6 @@
 package com.itjobapp.Util;
 
+import com.itjobapp.Database.entity.CandidateEntity;
 import com.itjobapp.Database.entity.CompanyEntity;
 import com.itjobapp.Database.entity.JobOfferEntity;
 import com.itjobapp.Database.entity.SkillsEntity;
@@ -136,6 +137,30 @@ public class Entities {
                 .lastName("Midowski")
                 .description("Be Mid")
                 .skills(setOfSkills())
+                .experiencelevel("Mid")
+                .build();
+    }
+
+    public static CandidateEntity getCandidateEntityJunior() {
+        return CandidateEntity.builder()
+                .email("junior@junior.pl")
+                .availabilityStatus(true)
+                .firstName("Jan")
+                .lastName("Juniorowski")
+                .description("Be Junior")
+                .skills(setOfSkillsEntity())
+                .experiencelevel("Junior")
+                .build();
+    }
+
+    public static CandidateEntity getCandidateEntityMid() {
+        return CandidateEntity.builder()
+                .email("mid@mid.pl")
+                .firstName("Mike")
+                .availabilityStatus(false)
+                .lastName("Midowski")
+                .description("Be Mid")
+                .skills(setOfSkillsEntity())
                 .experiencelevel("Mid")
                 .build();
     }

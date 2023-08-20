@@ -5,6 +5,8 @@ import com.itjobapp.Controller.dto.CompanyDTO;
 import com.itjobapp.Controller.dto.JobOfferDTO;
 import com.itjobapp.Controller.dto.mapper.CandidateMapper;
 import com.itjobapp.Controller.dto.mapper.CompanyMapper;
+import com.itjobapp.Database.repository.CandidateRepository;
+import com.itjobapp.Security.UserEntity;
 import com.itjobapp.Security.UserJpaRepository;
 import com.itjobapp.Security.UserService;
 import com.itjobapp.Service.CandidateService;
@@ -30,13 +32,13 @@ public class DashboardController {
     private final CandidateMapper candidateMapper;
     private final CompanyService companyService;
     private final CompanyMapper companyMapper;
+    private final UserService userService;
 
     @GetMapping("/dashboard")
     public String showDashboard(Authentication authentication, Model model) {
         if (authentication != null && authentication.isAuthenticated()) {
             String email = authentication.getName();
-            String role = getHighestUserRole(authentication);
-
+            String role = userService.findRoleByMail(email);
 
             if(role.equals("CANDIDATE")) {
                 CandidateDTO candidate = candidateMapper.map(candidateService.findCandidateByEmail(email));

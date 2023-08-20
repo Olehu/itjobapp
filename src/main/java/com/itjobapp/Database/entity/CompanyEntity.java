@@ -22,7 +22,7 @@ public class CompanyEntity {
     @Column(name = "company_id")
     private Integer companyId;
 
-    @Column(name = "company_name", nullable = false)
+    @Column(name = "company_name")
     private String companyName;
 
     @Column(name = "industry")
