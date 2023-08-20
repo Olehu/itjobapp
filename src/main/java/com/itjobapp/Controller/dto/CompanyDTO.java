@@ -12,6 +12,7 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@With
 public class CompanyDTO {
     String companyName;
     String industry;

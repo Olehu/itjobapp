@@ -2,6 +2,7 @@ package com.itjobapp.Util;
 
 import com.itjobapp.Controller.dto.CandidateDTO;
 import com.itjobapp.Controller.dto.CompanyDTO;
+import com.itjobapp.Controller.dto.JobOfferDTO;
 import com.itjobapp.Controller.dto.SkillsDTO;
 import com.itjobapp.Database.entity.CandidateEntity;
 import com.itjobapp.Database.entity.CompanyEntity;
@@ -64,6 +65,16 @@ public class Entities {
                 .remote("Remote")
                 .skills(setOfSkills())
                 .company(getCompanyABC())
+                .build();
+    }
+    public static JobOfferDTO jobOfferDTOJunior(){
+        return  JobOfferDTO.builder()
+                .name("Software Engineer")
+                .otherRequirements("no")
+                .experienceLevel("Junior")
+                .remote("Remote")
+                .skills(setOfSkillsDTO())
+                .company(getCompanyDTOABC())
                 .build();
     }
     public static JobOffer jobOfferMid(){

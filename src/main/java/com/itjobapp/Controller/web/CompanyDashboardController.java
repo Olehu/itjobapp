@@ -63,7 +63,6 @@ public class CompanyDashboardController {
                 JobOfferDTO jobOfferDTO = jobOfferMapper.map(jobOfferService.getJobOfferByName(name));
 
                 model.addAttribute("jobOffer", jobOfferDTO);
-                model.addAttribute("JobOffer", jobOfferMapper.map(jobOfferService.getJobOfferByName(name)));
                 return "dashboard-company-joboffer";
             }
         }

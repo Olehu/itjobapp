@@ -1,6 +1,5 @@
 package com.itjobapp.Controller.web;
 
-import com.itjobapp.Controller.dto.CompanyDTO;
 import com.itjobapp.Controller.dto.JobOfferDTO;
 import com.itjobapp.Controller.dto.mapper.CompanyMapper;
 import com.itjobapp.Controller.dto.mapper.JobOfferMapper;
@@ -73,8 +72,7 @@ public class JobOfferControler {
         Company company = companyService.getCompanyByName(companyName);
 
         if (company != null) {
-            JobOfferDTO jobOfferDTO = new JobOfferDTO();
-            jobOfferDTO.setCompany(companyMapper.map(company));
+            JobOfferDTO jobOfferDTO = new JobOfferDTO().withCompany(companyMapper.map(company));
             model.addAttribute("allSkills", ServiceController.getAllSkillsAsSkillSet());
             model.addAttribute("jobOffer", jobOfferDTO);
             return "joboffer-form";
@@ -104,10 +102,9 @@ public class JobOfferControler {
 
 
     @GetMapping(value = "/joboffer/profile/{name}")
-    public String showCompanyProfile(
+    public String showJobOfferProfile(
             @PathVariable String name, Model model) {
         JobOfferDTO jobOffer = jobOfferMapper.map(jobOfferService.getJobOfferByName(name));
-
 
         model.addAttribute("jobOffer", jobOffer);
         return "joboffer-profile";

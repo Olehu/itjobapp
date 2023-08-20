@@ -51,6 +51,7 @@ dependencies {
 	testImplementation 'com.h2database:h2'
 
 
+	testImplementation "io.rest-assured:rest-assured:${restAssuredVersion}"
 
 	implementation "org.mapstruct:mapstruct:${mapstructVersion}"
 	annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
