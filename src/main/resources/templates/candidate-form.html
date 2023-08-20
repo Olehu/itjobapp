@@ -10,6 +10,8 @@
     <title>Create Candidate</title>
 </head>
 <body>
+<div th:replace="fragments/top-menu :: header"></div>
+
 <h1>Create Candidate</h1>
 
 <form th:action="@{/candidate/new}" th:object="${candidate}" method="post">

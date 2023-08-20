@@ -10,6 +10,8 @@
 </head>
 
 <body>
+<div th:replace="fragments/top-menu :: header"></div>
+
 
 <div class="container">
   <h1>Edit Profile</h1>
@@ -32,7 +34,8 @@
     <div class="mb-3">
       <label for="skills" class="form-label">Skills</label>
       <select class="form-control" id="skills" th:field="*{skills}" multiple>
-        <option th:each="skill : ${allSkills}" th:value="${skill}" th:text="${skill.skillName}"></option>
+        <option th:unless="${candidate.skills}" th:value="">Add New Skill</option>
+        <option th:each="skill : ${allSkills}" th:value="${skill.skillName}" th:text="${skill.skillName}"></option>
       </select>
     </div>
     <div class="mb-3">

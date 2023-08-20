@@ -4,7 +4,6 @@ import com.itjobapp.Controller.dto.CandidateDTO;
 import com.itjobapp.Controller.dto.mapper.CandidateMapper;
 import com.itjobapp.Security.UserService;
 import com.itjobapp.Service.CandidateService;
-import com.itjobapp.Service.ImageService;
 import com.itjobapp.Service.domain.Candidate;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -26,7 +25,6 @@ public class CandidateDashboardController {
     private final CandidateService candidateService;
     private final CandidateMapper candidateMapper;
     private final UserService userService;
-    private final ImageService imageService;
 
     @PostMapping("/dashboard/candidate-edit-profile")
     public String editProfile(Authentication authentication, @ModelAttribute CandidateDTO candidateDTO) {
@@ -42,9 +40,9 @@ public class CandidateDashboardController {
                     .withFirstName(candidateDTO.getFirstName())
                     .withLastName(candidateDTO.getLastName())
                     .withEmail(candidateDTO.getEmail())
-                    .withSkills(candidateDTO.getSkills())
+                    .withSkills(candidateMapper.maper(candidateDTO).getSkills())
                     .withPhoneNumber(candidateDTO.getPhoneNumber())
-                    .withAvailable(candidateDTO.getAvailabilityStatus());
+                    .withAvailabilityStatus(candidateDTO.getAvailabilityStatus());
 
 
             candidateService.update(existingCandidate);

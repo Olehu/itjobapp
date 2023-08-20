@@ -1,6 +1,7 @@
 package com.itjobapp.Service;
 
 import com.itjobapp.Controller.dto.JobOfferDTO;
+import com.itjobapp.Controller.dto.mapper.JobOfferMapper;
 import com.itjobapp.Controller.web.exception.NotFoundException;
 import com.itjobapp.Database.entity.CandidateEntity;
 import com.itjobapp.Database.entity.CompanyEntity;
@@ -25,16 +26,13 @@ import java.util.stream.Collectors;
 public class JobOfferService {
 
     private final JobOfferDAO jobOfferDao;
-    private final JobOfferEntityMapper jobOfferEntityMapper;
+    private final JobOfferMapper jobOfferMapper;
     public JobOffer createJobOffer(JobOffer jobOffer) {
         return jobOfferDao.create(jobOffer);
     }
 
     public List<JobOffer> getAllJobOffer() {
-        List<JobOfferEntity> jobOfferEntities = jobOfferDao.getAllJobOffer();
-        return jobOfferEntities.stream()
-                .map(jobOfferEntityMapper::mapFromEntity)
-                .collect(Collectors.toList());
+     return  jobOfferDao.getAllJobOffer();
     }
 
     public JobOffer getJobOfferByName(String jobOfferName) {
@@ -42,7 +40,7 @@ public class JobOfferService {
                 .orElseThrow(() -> new NotFoundException("JobOffer not found"));
     }
 
-    public JobOffer update(JobOfferDTO updated) {
+    public JobOffer update(JobOffer updated) {
         return jobOfferDao.update(updated);
     }
 
@@ -53,8 +51,7 @@ public class JobOfferService {
 
     public List<JobOffer> searchJobOffers(String experienceLevel, String remote, Set<String> skills) {
 
-        List<JobOfferEntity> jobOffers = jobOfferDao.getAllJobOffer();
-
+        List<JobOffer> jobOffers = jobOfferDao.getAllJobOffer();
         return jobOffers.stream()
                 .filter(jobOfferEntity -> {
                     boolean matches = true;
@@ -68,12 +65,15 @@ public class JobOfferService {
                     }
 
                     if (skills != null && !skills.isEmpty()) {
-                        matches = skills.stream().anyMatch(skill -> jobOfferEntity.getSkills().contains(skill));
+                        Set<String> jobOfferSkills = jobOfferEntity.getSkills().stream()
+                                .map(skill -> skill.getSkillName())
+                                .collect(Collectors.toSet());
+
+                        matches = skills.stream().anyMatch(skill -> jobOfferSkills.contains(skill));
                     }
 
                     return matches;
                 })
-                .map(jobOfferEntityMapper::mapFromEntity)
                 .collect(Collectors.toList());
     }
 

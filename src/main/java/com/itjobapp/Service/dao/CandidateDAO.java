@@ -9,7 +9,7 @@ import java.util.Optional;
 
 
 public interface CandidateDAO {
-    List<CandidateEntity> getAllCandidates();
+    List<Candidate> getAllCandidates();
 
     Candidate create(Candidate candidate);
 

@@ -10,6 +10,8 @@
     <title>Create Company</title>
 </head>
 <body>
+<div th:replace="fragments/top-menu :: header"></div>
+
 <h1>Create Company</h1>
 
 <form th:action="@{/company/new}" th:object="${company}" method="post">

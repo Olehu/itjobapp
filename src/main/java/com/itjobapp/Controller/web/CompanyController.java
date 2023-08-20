@@ -26,7 +26,6 @@ public class CompanyController {
     private final CompanyService companyService;
 
     private final CompanyMapper companyMapper;
-private final JobOfferMapper jobOfferMapper;
 
     @GetMapping("/company")
     public String companyPage(

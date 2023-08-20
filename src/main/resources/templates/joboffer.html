@@ -11,6 +11,8 @@
 </head>
 
 <body>
+<div th:replace="fragments/top-menu :: header"></div>
+
 <div class="container">
     <h1>Job Offer!</h1>
 </div>
@@ -35,10 +37,11 @@
         </select>
     </div>
     <div class="mb-3">
-        <label for="skills" class="form-label">Search by Skills:</label>
-        <select class="form-select" id="skills" name="skills" multiple="multiple">
-            <option th:each="skill : ${allSkills}" th:value="${skill}" th:text="${skill}"></option>
+        <label class="form-label">Skills:</label>
+        <select class="form-select" multiple name="skills">
+            <option th:each="skill : ${allSkills}" th:value="${skill.skillName}" th:text="${skill.skillName}"></option>
         </select>
+        </ul>
     </div>
     <button type="submit" class="btn btn-primary">Search</button>
 </form>

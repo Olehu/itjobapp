@@ -11,6 +11,8 @@
 </head>
 
 <body>
+<div th:replace="fragments/top-menu :: header"></div>
+
 <div class="container">
     <h1>Create a Job Offer!</h1>
 </div>
@@ -24,19 +26,34 @@
 
         <div class="mb-3">
             <label for="experienceLevel" class="form-label">Experience Level</label>
-            <input type="text" class="form-control" id="experienceLevel" th:field="*{experienceLevel}" placeholder="Enter experience level">
+            <select class="form-control" id="experienceLevel" th:field="*{experienceLevel}">
+                <option value="Junior">Junior</option>
+                <option value="Mid">Mid</option>
+                <option value="Senior">Senior</option>
+            </select>
         </div>
 
         <div class="mb-3">
             <label for="otherRequirements" class="form-label">Other Requirements</label>
             <textarea class="form-control" id="otherRequirements" th:field="*{otherRequirements}" placeholder="Enter other requirements"></textarea>
         </div>
+
+        <div class="mb-3">
+            <label for="remote" class="form-label">Remote</label>
+            <select class="form-control" id="remote" th:field="*{remote}">
+                <option value="Remote">Remote</option>
+                <option value="Hybrid">Hybrid</option>
+                <option value="Stationary">Stationary</option>
+            </select>
+        </div>
         <div class="mb-3">
             <label for="skills" class="form-label">Skills:</label>
-            <textarea class="form-control" id="skills" th:field="*{skills}" placeholder="Enter skills:"></textarea>
+            <select class="form-control" id="skills" th:field="*{skills}" multiple>
+                <option th:each="skill : ${allSkills}" th:value="${skill.skillName}" th:text="${skill.skillName}"></option>
+            </select>
         </div>
-
         <input type="hidden" name="companyName" th:value="${jobOffer.company.companyName}" />
+
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>

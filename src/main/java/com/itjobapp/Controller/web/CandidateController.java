@@ -48,14 +48,14 @@ public class CandidateController {
         }
 
         model.addAttribute("candidates", candidates);
-        model.addAttribute("allSkills", ServiceController.getAllSkills());
+        model.addAttribute("allSkills", ServiceController.getAllSkillsAsSkillSet());
         return "candidate";
     }
 
 
     @GetMapping(value = "/candidate/new")
     public String showCandidateForm(Model model) {
-        model.addAttribute("allSkills", ServiceController.getAllSkills());
+        model.addAttribute("allSkills", ServiceController.getAllSkillsAsSkillSet());
         model.addAttribute("candidate", new CandidateDTO());
         return "candidate-form";
     }
@@ -100,7 +100,7 @@ public class CandidateController {
             candidate = candidate.withAvailabilityStatus(false);
             candidateService.update(candidate);
         }
-        return "redirect:/candidate/{candidateEmail}";
+        return "redirect:/candidate";
     }
 
     @GetMapping(value = "/candidate/profile/image/{candidateEmail}", produces = MediaType.IMAGE_JPEG_VALUE)

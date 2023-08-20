@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface CompanyDAO {
     Company create(Company company);
 
-    List<CompanyEntity> getAllCompanies();
+    List<Company> getAllCompanies();
 
 
     Optional<Company> findByCompanyName(String companyName);

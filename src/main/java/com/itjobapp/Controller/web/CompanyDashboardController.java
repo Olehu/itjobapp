@@ -41,7 +41,7 @@ public class CompanyDashboardController {
              existingCompany = existingCompany
                     .withCompanyName(companyDTO.getCompanyName())
                     .withIndustry(companyDTO.getIndustry())
-                    .withLocation(companyDTO.getLocation())
+                    .withCity(companyDTO.getCity())
                     .withJobOffers(companyMapper.maper(companyDTO).getJobOffers())
                     .withIsHiring(companyDTO.getIsHiring())
                     .withEmail(companyDTO.getEmail());
@@ -77,7 +77,7 @@ public class CompanyDashboardController {
             String email = authentication.getName();
             if (email.equals(jobOfferService.getJobOfferByName(name).getCompany().getEmail())) {
                 JobOfferDTO jobOfferDTO = jobOfferMapper.map(jobOfferService.getJobOfferByName(name));
-                model.addAttribute("allSkills", ServiceController.getAllSkills());
+                model.addAttribute("allSkills", ServiceController.getAllSkillsAsSkillSet());
                 model.addAttribute("jobOfferDTO", jobOfferDTO);
                 return "dashboard-company-edit-joboffer";
             }
@@ -94,13 +94,12 @@ public class CompanyDashboardController {
 
 
                 JobOffer existingJobOffer = jobOfferService.getJobOfferByName(jobOfferDTO.getName())
-                        .withSkills(jobOfferDTO.getSkills())
+                        .withSkills(jobOfferMapper.maper(jobOfferDTO).getSkills())
                         .withExperienceLevel(jobOfferDTO.getExperienceLevel())
                         .withOtherRequirements(jobOfferDTO.getOtherRequirements());
 
-                JobOfferDTO updated = jobOfferMapper.map(existingJobOffer);
 
-                jobOfferService.update(updated);
+                jobOfferService.update(existingJobOffer);
                 return "redirect:/dashboard";
             }
         }

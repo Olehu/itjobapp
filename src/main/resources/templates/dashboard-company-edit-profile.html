@@ -10,6 +10,8 @@
   <title>Edit Company</title>
 </head>
 <body>
+<div th:replace="fragments/top-menu :: header"></div>
+
 <h1>Edit Company</h1>
 
 <form th:action="@{/dashboard/company-edit-profile}" th:object="${company}" method="post">
@@ -35,6 +37,7 @@
   <label for="description">Description:</label>
   <textarea id="description" th:field="*{description}"></textarea>
   <br>
+  <button type="submit">Confirm</button>
 </form>
 
 

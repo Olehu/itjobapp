@@ -42,7 +42,7 @@ public class JobOfferEntity {
     )
     private Set<SkillsEntity> skills;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "company_id")
     private CompanyEntity company;
 

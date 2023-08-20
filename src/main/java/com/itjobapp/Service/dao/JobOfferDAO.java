@@ -12,11 +12,11 @@ public interface JobOfferDAO {
 
     JobOffer create(JobOffer jobOffer);
 
-    List<JobOfferEntity> getAllJobOffer();
+    List<JobOffer> getAllJobOffer();
 
     Optional<JobOffer> findByJobOfferName(String jobOfferName);
 
-    JobOffer update(JobOfferDTO updated);
+    JobOffer update(JobOffer updated);
 
     void delete(String name);
 }

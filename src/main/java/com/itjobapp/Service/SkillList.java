@@ -4,8 +4,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Service
 public enum SkillList {
     JAVA("Java"),
     PYTHON("Python"),
@@ -38,5 +38,11 @@ public enum SkillList {
 
     public static List<SkillList> getAllSkills() {
         return Arrays.asList(values());
+    }
+
+    public static List<String> getAllSkillsAsString() {
+        return Arrays.stream(values())
+                .map(SkillList::getDisplayName)
+                .collect(Collectors.toList());
     }
 }

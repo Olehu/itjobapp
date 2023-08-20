@@ -52,7 +52,7 @@ public class JobOfferControler {
                     .map(jobOfferMapper::map)
                     .toList();
         }
-        model.addAttribute("allSkills", ServiceController.getAllSkills());
+        model.addAttribute("allSkills", ServiceController.getAllSkillsAsSkillSet());
         model.addAttribute("jobOffers", jobOffers);
         return "joboffer";
     }
@@ -75,6 +75,7 @@ public class JobOfferControler {
         if (company != null) {
             JobOfferDTO jobOfferDTO = new JobOfferDTO();
             jobOfferDTO.setCompany(companyMapper.map(company));
+            model.addAttribute("allSkills", ServiceController.getAllSkillsAsSkillSet());
             model.addAttribute("jobOffer", jobOfferDTO);
             return "joboffer-form";
         } else {

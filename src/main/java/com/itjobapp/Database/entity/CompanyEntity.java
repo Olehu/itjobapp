@@ -40,7 +40,7 @@ public class CompanyEntity {
     @Column(name = "description", length = 1000)
     private String description;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "company")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "company")
     private Set<JobOfferEntity> jobOffers;
 
 

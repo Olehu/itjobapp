@@ -29,7 +29,7 @@ CREATE TABLE job_offer (
                            job_offer_id SERIAL NOT NULL,
                            name VARCHAR(255) NOT NULL,
                            company_id INT NOT NULL,
-                           skills VARCHAR(255) NOT NULL,
+                           skills VARCHAR(255),
                            experience_level VARCHAR(100),
                            other_requirements VARCHAR(1000),
                            remote VARCHAR(20),
@@ -43,7 +43,7 @@ CREATE TABLE skills (
                         skill_name VARCHAR(255)
 );
 
-CREATE TABLE job_offfer_skills (
+CREATE TABLE job_offer_skills (
                                 id_job_offfer_skills SERIAL,
                                 job_offer_id INT,
                                 skill_id INT,

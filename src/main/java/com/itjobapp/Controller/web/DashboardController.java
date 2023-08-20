@@ -9,6 +9,8 @@ import com.itjobapp.Security.UserJpaRepository;
 import com.itjobapp.Security.UserService;
 import com.itjobapp.Service.CandidateService;
 import com.itjobapp.Service.CompanyService;
+import com.itjobapp.Service.SkillList;
+import com.itjobapp.Service.domain.Skills;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,14 +18,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Controller
 @AllArgsConstructor
 public class DashboardController {
-    private final UserService userService;
-    private final UserJpaRepository userJpaRepository;
     private final CandidateService candidateService;
     private final CandidateMapper candidateMapper;
     private final CompanyService companyService;
@@ -76,11 +78,9 @@ public class DashboardController {
         if (authentication != null && authentication.isAuthenticated()) {
             String email = authentication.getName();
             String role = getHighestUserRole(authentication);
-
-
             if(role.equals("CANDIDATE")) {
                 CandidateDTO candidate = candidateMapper.map(candidateService.findCandidateByEmail(email));
-                model.addAttribute("allSkills", ServiceController.getAllSkills());
+                model.addAttribute("allSkills", ServiceController.getAllSkillsAsSkillSet());
                 model.addAttribute("candidate", candidate);
                 return "dashboard-candidate-edit-profile";
             } else if(role.equals("COMPANY")) {

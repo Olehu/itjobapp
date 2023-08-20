@@ -35,8 +35,9 @@ public class CompanyRepository implements CompanyDAO {
     }
 
     @Override
-    public List<CompanyEntity> getAllCompanies() {
-        return companyJpaRepository.findAll();
+    public List<Company> getAllCompanies() {
+
+        return companyJpaRepository.findAll().stream().map(companyEntityMapper::mapFromEntity).collect(java.util.stream.Collectors.toList());
     }
 
     @Override
@@ -64,7 +65,7 @@ public class CompanyRepository implements CompanyDAO {
 
         CompanyEntity toSave = search.withCompanyName(existingCompany.getCompanyName())
                 .withIndustry(existingCompany.getIndustry())
-                .withLocation(existingCompany.getLocation())
+                .withCity(existingCompany.getCity())
                 .withEmail(existingCompany.getEmail())
                 .withIsHiring(existingCompany.getIsHiring())
                 .withJobOffers(companyEntityMapper.mapToEntity(existingCompany).getJobOffers());

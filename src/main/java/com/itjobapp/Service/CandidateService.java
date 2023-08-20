@@ -20,12 +20,8 @@ import java.util.stream.Collectors;
 public class CandidateService {
 
     private final CandidateDAO candidateDao;
-    private final CandidateEntityMapper candidateEntityMapper;
     public List<Candidate> getAllCandidates() {
-        List<CandidateEntity> candidateEntities = candidateDao.getAllCandidates();
-        return candidateEntities.stream()
-                .map(candidateEntityMapper::mapFromEntity)
-                .collect(Collectors.toList());
+        return candidateDao.getAllCandidates();
     }
 
     public Candidate createCandidate(Candidate candidate) {
@@ -49,21 +45,21 @@ public class CandidateService {
         return candidateDao.saveImage(imageFile, existingCandidate);
     }
 
-    public void setProfileImage(String imageName, String email) {
-        candidateDao.setProfileImage(imageName, email);
-    }
 
-    public List<Candidate> searchCandidates(Set<String> skills, Boolean available) {
+    public List<Candidate> searchCandidates(Boolean available, Set<String> skills) {
 
-        List<CandidateEntity> candidates = candidateDao.getAllCandidates();
+        List<Candidate> candidates = candidateDao.getAllCandidates();
 
         List<Candidate> collect = candidates.stream()
                 .filter(candidateEntity -> {
                     boolean matches = true;
 
                     if (skills != null && !skills.isEmpty() && candidateEntity.getSkills() != null) {
-                        matches = candidateEntity.getSkills().stream()
-                                .anyMatch(skill -> skills.contains(skill.getSkillName()));
+                        Set<String> jobOfferSkills = candidateEntity.getSkills().stream()
+                                .map(skill -> skill.getSkillName())
+                                .collect(Collectors.toSet());
+
+                        matches = skills.stream().anyMatch(skill -> jobOfferSkills.contains(skill));
                     }
 
                     if (available != null){
@@ -72,15 +68,11 @@ public class CandidateService {
 
                     return matches;
                 })
-                .map(candidateEntityMapper::mapFromEntity)
                 .collect(Collectors.toList());
 
         return collect;
     }
 
 
-    public Candidate getCandidateById(Integer candidateId) {
-        return candidateDao.findById(candidateId)
-                .orElseThrow(() -> new NotFoundException("Candidate not found"));
-    }
+
 }

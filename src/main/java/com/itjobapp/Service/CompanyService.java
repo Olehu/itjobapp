@@ -22,8 +22,6 @@ import java.util.stream.Collectors;
 public class CompanyService {
 
     private final CompanyDAO companyDao;
-    private final CompanyEntityMapper companyEntityMapper;
-    private final JobOfferEntityMapper  jobOfferEntityMapper;
 
 
     @Transactional
@@ -32,10 +30,7 @@ public class CompanyService {
     }
 
     public List<Company> getAllCompanies() {
-        List<CompanyEntity> companyEntities = companyDao.getAllCompanies();
-        return companyEntities.stream()
-                .map(companyEntityMapper::mapFromEntity)
-                .collect(Collectors.toList());
+        return companyDao.getAllCompanies();
     }
 
 
@@ -45,34 +40,30 @@ public class CompanyService {
                 .orElseThrow(() -> new NotFoundException("Company not found"));
     }
 
-    public Company getCompanyById(Integer companyId) {
-        return companyDao.findById(companyId)
-                .orElseThrow(() -> new NotFoundException("Company not found"));
-    }
+
 
     public List<Company> searchCompanies(String location, Boolean isHiring, Boolean hasJobOffers) {
-        List<CompanyEntity> companyEntities = companyDao.getAllCompanies();
+        List<Company> company = companyDao.getAllCompanies();
 
-        return companyEntities.stream()
-                .filter(companyEntity -> {
+        return company.stream()
+                .filter(record -> {
                     boolean matches = true;
 
                     if (location != null && !location.isEmpty()) {
-                        matches = companyEntity.getCity().equalsIgnoreCase(location);
+                        matches = record.getCity().equalsIgnoreCase(location);
                     }
 
                     if (isHiring != null) {
-                        matches = matches && companyEntity.getIsHiring().equals(isHiring);
+                        matches = matches && record.getIsHiring().equals(isHiring);
                     }
 
                     if (hasJobOffers != null) {
-                        boolean companyHasJobOffers = !companyEntity.getJobOffers().isEmpty();
-                        matches = matches && (hasJobOffers.equals(companyHasJobOffers));
+                        boolean recordHasJobOffers = !record.getJobOffers().isEmpty();
+                        matches = matches && (hasJobOffers.equals(recordHasJobOffers));
                     }
 
                     return matches;
                 })
-                .map(companyEntityMapper::mapFromEntity)
                 .collect(Collectors.toList());
     }
 
@@ -90,3 +81,5 @@ public class CompanyService {
         return companyDao.createByMail(email);
     }
 }
+
+

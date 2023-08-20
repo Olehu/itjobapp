@@ -4,9 +4,11 @@ package com.itjobapp.Database.repository.mapper;
 import com.itjobapp.Database.entity.CandidateEntity;
 import com.itjobapp.Database.entity.CompanyEntity;
 import com.itjobapp.Database.entity.JobOfferEntity;
+import com.itjobapp.Database.entity.SkillsEntity;
 import com.itjobapp.Service.domain.Candidate;
 import com.itjobapp.Service.domain.Company;
 import com.itjobapp.Service.domain.JobOffer;
+import com.itjobapp.Service.domain.Skills;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -32,14 +34,20 @@ public interface CompanyEntityMapper {
 
 
     default JobOffer mapJobOfferEntityToJobOffer(JobOfferEntity jobOfferEntity) {
+        Set<Skills> skills = jobOfferEntity.getSkills().stream().map(this::mapSkillsEntityToSkills).collect(Collectors.toSet());
         return JobOffer.builder()
                 .name(jobOfferEntity.getName())
                 .experienceLevel(jobOfferEntity.getExperienceLevel())
                 .otherRequirements(jobOfferEntity.getOtherRequirements())
-                .skills(jobOfferEntity.getSkills())
+                .skills(skills)
                 .build();
     }
 
+    default Skills mapSkillsEntityToSkills(SkillsEntity skillsEntity) {
+        return Skills.builder()
+                .skillName(skillsEntity.getSkillName())
+                .build();
+    }
 
 
 }
