@@ -2,10 +2,7 @@ package com.itjobapp.Controller.dto;
 
 import com.itjobapp.Database.entity.SkillsEntity;
 import jakarta.persistence.Lob;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Set;
 
@@ -13,6 +10,7 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@With
 public class CandidateDTO {
 
     String firstName;

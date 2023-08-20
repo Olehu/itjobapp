@@ -64,22 +64,11 @@ public class DashboardController {
         return "home";
     }
 
-    private String getHighestUserRole(Authentication authentication) {
-        for (GrantedAuthority authority : authentication.getAuthorities()) {
-            if (authority.getAuthority().equals("CANDIDATE")) {
-                return "CANDIDATE";
-            } else if (authority.getAuthority().equals("COMPANY")) {
-                return "COMPANY";
-            }
-        }
-        return "Unknown";
-    }
-
     @GetMapping("/edit-profile")
     public String showEditProfile(Authentication authentication, Model model) {
         if (authentication != null && authentication.isAuthenticated()) {
             String email = authentication.getName();
-            String role = getHighestUserRole(authentication);
+            String role = userService.findRoleByMail(email);
             if(role.equals("CANDIDATE")) {
                 CandidateDTO candidate = candidateMapper.map(candidateService.findCandidateByEmail(email));
                 model.addAttribute("allSkills", ServiceController.getAllSkillsAsSkillSet());

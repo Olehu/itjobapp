@@ -1,5 +1,8 @@
 package com.itjobapp.Util;
 
+import com.itjobapp.Controller.dto.CandidateDTO;
+import com.itjobapp.Controller.dto.CompanyDTO;
+import com.itjobapp.Controller.dto.SkillsDTO;
 import com.itjobapp.Database.entity.CandidateEntity;
 import com.itjobapp.Database.entity.CompanyEntity;
 import com.itjobapp.Database.entity.JobOfferEntity;
@@ -34,6 +37,15 @@ public class Entities {
                 .description("asfdjasoidfsa").build();
     }
 
+    public static CompanyDTO getCompanyDTOABC() {
+        return CompanyDTO.builder()
+                .companyName("ABC Company")
+                .industry("Technology")
+                .city("New York")
+                .email("abc@abc.com")
+                .isHiring(true)
+                .description("asfdjasoidfsa").build();
+    }
     public static Company getCompanyXYZ() {
         return  Company.builder()
                 .companyName("XYZ Company")
@@ -98,6 +110,18 @@ public class Entities {
         return skillsSet;
     }
 
+    public static Set<SkillsDTO> setOfSkillsDTO() {
+        SkillsDTO skill = SkillsDTO.builder()
+                .skillName("Java")
+                .build();
+        SkillsDTO skillTwo = SkillsDTO.builder()
+                .skillName("Python")
+                .build();
+
+        Set<SkillsDTO> skillsSet = Set.of(skill, skillTwo);
+        return skillsSet;
+    }
+
     public static Set<SkillsEntity> setOfSkillsEntity() {
         SkillsEntity skill = SkillsEntity.builder()
                 .skillId(1)
@@ -138,6 +162,18 @@ public class Entities {
                 .description("Be Mid")
                 .skills(setOfSkills())
                 .experiencelevel("Mid")
+                .build();
+    }
+
+    public static CandidateDTO getCandidateDTOJunior() {
+        return CandidateDTO.builder()
+                .email("junior@junior.pl")
+                .availabilityStatus(true)
+                .firstName("Jan")
+                .lastName("Juniorowski")
+                .description("Be Junior")
+                .skills(setOfSkillsDTO())
+                .experiencelevel("Junior")
                 .build();
     }
 
