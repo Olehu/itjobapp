@@ -4,7 +4,6 @@ CREATE TABLE company (
                          industry VARCHAR(128),
                          city VARCHAR(128),
                          email VARCHAR(128) NOT NULL,
-                         is_hiring BOOLEAN,
                          description VARCHAR(1000),
                          unique (company_name),
                          PRIMARY KEY (company_id)

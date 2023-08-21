@@ -91,13 +91,16 @@ public class JobOfferControler {
             log.error("Binding result has errors {}", bindingResult.getAllErrors());
             return "joboffer";
         }
+        if (companyName.isEmpty() || companyName.isBlank()) {
+            return "redirect:/dashboard";
+        }
 
         Company company = companyService.getCompanyByName(companyName);
             jobOfferDTO.setCompany(companyMapper.map(company));
 
 
         jobOfferService.createJobOffer(jobOfferMapper.maper(jobOfferDTO));
-        return "redirect:/joboffer";
+        return "redirect:/dashboard";
     }
 
 
