@@ -1,12 +1,13 @@
 package com.itjobapp.Database.repository.mapper;
 
-import com.itjobapp.Database.entity.CompanyEntity;
+import com.itjobapp.Controller.dto.JobOfferDTO;
+import com.itjobapp.Controller.dto.SkillsDTO;
 import com.itjobapp.Database.entity.JobOfferEntity;
 import com.itjobapp.Database.entity.SkillsEntity;
 import com.itjobapp.Service.domain.Company;
 import com.itjobapp.Service.domain.JobOffer;
 import com.itjobapp.Service.domain.Skills;
-import com.itjobapp.Database.repository.mapper.CompanyEntityMapperImpl;
+import com.itjobapp.Util.Entities;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -85,4 +86,46 @@ public class CompanyEntityMapperImplTest {
         assertEquals(jobOffer.getOtherRequirements(), jobOfferEntity.getOtherRequirements());
         assertEquals(jobOffer.getRemote(), jobOfferEntity.getRemote());
     }
+    @Test
+    public void testSkillsDTOToSkills() {
+        SkillsDTO skillsDTO = new SkillsDTO();
+        skillsDTO.setSkillName("Java");
+
+        Skills result = new Skills("Java");
+        assertNotNull(result);
+        assertEquals("Java", result.getSkillName());
+    }
+
+    @Test
+    public void testSkillsDTOSetToSkillsSet() {
+        Set<SkillsDTO> skillsDTOSet = new HashSet<>();
+        SkillsDTO skillsDTO1 = new SkillsDTO();
+        skillsDTO1.setSkillName("Java");
+        skillsDTOSet.add(skillsDTO1);
+
+
+
+        assertEquals(skillsDTOSet.size(), 1);
+    }
+
+    @Test
+    public void testJobOfferDTOToJobOffer() {
+        SkillsDTO skillsDTO = new SkillsDTO();
+        skillsDTO.setSkillName("Java");
+        Set<SkillsDTO> skillsDTOSet = new HashSet<>();
+        skillsDTOSet.add(skillsDTO);
+
+
+        JobOfferDTO jobOfferDTO = Entities.jobOfferDTOJunior();
+
+
+        JobOffer jobOffer = Entities.jobOfferJunior();
+
+        assertNotNull(jobOffer);
+        assertEquals(jobOfferDTO.getName(), jobOffer.getName());
+        assertEquals(jobOfferDTO.getExperienceLevel(), jobOffer.getExperienceLevel());
+        assertEquals(jobOfferDTO.getOtherRequirements(), jobOffer.getOtherRequirements());
+        assertEquals(jobOfferDTO.getRemote(), jobOffer.getRemote());
+    }
+
 }

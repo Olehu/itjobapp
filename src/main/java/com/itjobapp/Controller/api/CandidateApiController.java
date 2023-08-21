@@ -6,14 +6,10 @@ import com.itjobapp.Security.UserService;
 import com.itjobapp.Service.CandidateService;
 import com.itjobapp.Service.domain.Candidate;
 import lombok.AllArgsConstructor;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -59,23 +55,7 @@ public class CandidateApiController {
         return ResponseEntity.notFound().build();
     }
 
-    @PostMapping("/hire/{candidateEmail}")
-    public ResponseEntity<Void> hireCandidate(@PathVariable String candidateEmail) {
-        Candidate candidate = candidateService.findCandidateByEmail(candidateEmail);
-        if (candidate != null) {
-            candidate = candidate.withAvailabilityStatus(false);
-            candidateService.update(candidate);
-            return ResponseEntity.ok().build();
-        }
-        return ResponseEntity.notFound().build();
-    }
 
-    @GetMapping("/image/{candidateEmail}")
-    public ResponseEntity<byte[]> getCandidateProfileImage(@PathVariable String candidateEmail) {
-        Candidate candidate = candidateService.findCandidateByEmail(candidateEmail);
-        if (candidate != null && candidate.getProfileImage() != null) {
-            return ResponseEntity.ok(candidate.getProfileImage());
-        }
-        return ResponseEntity.notFound().build();
-    }
+
+
 }
