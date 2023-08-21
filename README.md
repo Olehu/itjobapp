@@ -26,3 +26,8 @@ IT Job App is a simplified application designed for recruitment agencies special
 
 2. **Candidate**: Can create and manage their profile, create a virtual CV, upload a profile picture, search for companies, and update availability status.
 
+## ERD Diagram
+
+The Entity-Relationship Diagram (ERD) provides a visual representation of the data model and the relationships between entities in the application.
+
+![ERD Diagram](https://github.com/Olehu/itjobapp/blob/master/src/main/resources/static/images/diagram.png)
