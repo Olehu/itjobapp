@@ -91,7 +91,7 @@ public class CandidateDashboardControllerTest {
         when(candidateService.findCandidateByEmail("candidate@example.com")).thenReturn(Entities.getCandidateJunior());
 
         mockMvc.perform(MockMvcRequestBuilders.multipart("/upload-image")
-                        .file("image", imageFile.getBytes())
+                        .file("image.jpeg", imageFile.getBytes())
                         .principal(authentication)
                 .with(csrf()))
                 .andExpect(status().is3xxRedirection())

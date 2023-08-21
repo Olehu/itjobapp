@@ -9,14 +9,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 
 @Controller
 @AllArgsConstructor
@@ -75,8 +72,10 @@ public class CandidateDashboardController {
         String uploadPath = "/static/images/profile/";
         if (authentication != null && authentication.isAuthenticated()) {
             String email = authentication.getName();
-            candidateService.saveImage(imageFile, candidateService.findCandidateByEmail(email));
-                return "redirect:/dashboard";
+            if (!imageFile.getContentType().equals("image/jpeg")) {
+                candidateService.saveImage(imageFile, candidateService.findCandidateByEmail(email));
+            }
+            return "redirect:/dashboard";
         }
 
         return "redirect:/dashboard";

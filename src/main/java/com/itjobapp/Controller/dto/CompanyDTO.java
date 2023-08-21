@@ -1,7 +1,6 @@
 package com.itjobapp.Controller.dto;
 
-import com.itjobapp.Database.entity.JobOfferEntity;
-import com.itjobapp.Service.domain.JobOffer;
+import jakarta.validation.constraints.Email;
 import lombok.*;
 
 import java.util.HashSet;
@@ -17,6 +16,7 @@ public class CompanyDTO {
     String companyName;
     String industry;
     String city;
+    @Email
     String email;
     Boolean isHiring;
     String description;

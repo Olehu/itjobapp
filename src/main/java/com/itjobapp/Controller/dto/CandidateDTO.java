@@ -1,7 +1,6 @@
 package com.itjobapp.Controller.dto;
 
-import com.itjobapp.Database.entity.SkillsEntity;
-import jakarta.persistence.Lob;
+import jakarta.validation.constraints.Email;
 import lombok.*;
 
 import java.util.Set;
@@ -15,6 +14,7 @@ public class CandidateDTO {
 
     String firstName;
     String lastName;
+    @Email
     String email;
     String phoneNumber;
     String experiencelevel;
