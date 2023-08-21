@@ -1,6 +1,5 @@
 package com.itjobapp.Controller.api;
 
-import com.itjobapp.Controller.dto.CompanyDTO;
 import com.itjobapp.Controller.dto.JobOfferDTO;
 import com.itjobapp.Controller.dto.mapper.CompanyMapper;
 import com.itjobapp.Controller.dto.mapper.JobOfferMapper;
@@ -54,12 +53,5 @@ public class JobOfferApiController {
         return ResponseEntity.ok(jobOfferDTO);
     }
 
-    @GetMapping("/{name}")
-    public ResponseEntity<JobOfferDTO> getJobOfferProfile(@PathVariable String name) {
-        JobOfferDTO jobOffer = jobOfferMapper.map(jobOfferService.getJobOfferByName(name));
-        if (jobOffer != null) {
-            return ResponseEntity.ok(jobOffer);
-        }
-        return ResponseEntity.notFound().build();
-    }
+
 }
