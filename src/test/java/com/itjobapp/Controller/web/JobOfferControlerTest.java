@@ -6,13 +6,15 @@ import com.itjobapp.Controller.dto.mapper.JobOfferMapper;
 import com.itjobapp.Service.CompanyService;
 import com.itjobapp.Service.JobOfferService;
 import com.itjobapp.Service.domain.Company;
-import com.itjobapp.Service.domain.JobOffer;
 import com.itjobapp.Util.Entities;
+import com.itjobapp.configuration.PersistenceContainerTestConfiguration;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -25,7 +27,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(JobOfferControler.class)
 @ExtendWith(SpringExtension.class)
-
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Import(PersistenceContainerTestConfiguration.class)
 public class JobOfferControlerTest {
 
     @Autowired
@@ -83,7 +86,7 @@ JobOfferDTO jobOfferDTO = new JobOfferDTO().withCompany(Entities.getCompanyDTOAB
                         .flashAttr("jobOffer", jobOfferDTO)
                         .with(csrf()))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/joboffer"));
+                .andExpect(redirectedUrl("/dashboard"));
     }
 
 

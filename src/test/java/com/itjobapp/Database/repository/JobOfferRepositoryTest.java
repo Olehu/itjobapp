@@ -1,35 +1,25 @@
 package com.itjobapp.Database.repository;
+
 import com.itjobapp.Database.entity.JobOfferEntity;
-import com.itjobapp.Database.repository.JobOfferRepository;
-import com.itjobapp.Database.repository.mapper.CompanyEntityMapper;
-import com.itjobapp.ItjobappApplication;
 import com.itjobapp.Service.domain.Company;
 import com.itjobapp.Service.domain.JobOffer;
 import com.itjobapp.Util.Entities;
-import jakarta.persistence.EntityManager;
+import com.itjobapp.configuration.PersistenceContainerTestConfiguration;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.batch.BatchProperties;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
+import org.springframework.context.annotation.Import;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 @SpringBootTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Import(PersistenceContainerTestConfiguration.class)
 public class JobOfferRepositoryTest {
 
     @Autowired

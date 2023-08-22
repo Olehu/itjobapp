@@ -3,14 +3,16 @@ package com.itjobapp.Controller.dto.mapper;
 
 import com.itjobapp.Controller.dto.JobOfferDTO;
 import com.itjobapp.Controller.dto.SkillsDTO;
-import com.itjobapp.Controller.dto.mapper.JobOfferMapperImpl;
 import com.itjobapp.Service.domain.JobOffer;
 import com.itjobapp.Service.domain.Skills;
+import com.itjobapp.configuration.PersistenceContainerTestConfiguration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -18,6 +20,8 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Import(PersistenceContainerTestConfiguration.class)
 public class JobOfferMapperImplTest {
 
     @Autowired

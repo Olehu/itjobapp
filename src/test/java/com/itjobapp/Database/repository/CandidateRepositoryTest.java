@@ -3,10 +3,13 @@ package com.itjobapp.Database.repository;
 import com.itjobapp.Database.entity.CandidateEntity;
 import com.itjobapp.Service.domain.Candidate;
 import com.itjobapp.Util.Entities;
+import com.itjobapp.configuration.PersistenceContainerTestConfiguration;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 
 import java.util.List;
 
@@ -14,6 +17,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 @SpringBootTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Import(PersistenceContainerTestConfiguration.class)
 public class CandidateRepositoryTest {
     @Autowired
     private CandidateRepository candidateRepository;

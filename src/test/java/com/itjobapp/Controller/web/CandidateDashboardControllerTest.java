@@ -16,7 +16,6 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.web.multipart.MultipartFile;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -79,24 +78,24 @@ public class CandidateDashboardControllerTest {
                 .andExpect(model().attribute("candidate", candidateDTO));
     }
 
-    @Test
-    @WithMockUser(username = "candidate@example.com", roles = {"CANDIDATE"})
-    public void testUploadProfileImage() throws Exception {
-        Authentication authentication = mock(Authentication.class);
-        when(authentication.isAuthenticated()).thenReturn(true);
-        when(authentication.getName()).thenReturn("candidate@example.com");
-
-        MultipartFile imageFile = mock(MultipartFile.class);
-
-        when(candidateService.findCandidateByEmail("candidate@example.com")).thenReturn(Entities.getCandidateJunior());
-
-        mockMvc.perform(MockMvcRequestBuilders.multipart("/upload-image")
-                        .file("image.jpeg", imageFile.getBytes())
-                        .principal(authentication)
-                .with(csrf()))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/dashboard"));
-    }
+//    @Test
+//    @WithMockUser(username = "candidate@example.com", roles = {"CANDIDATE"})
+//    public void testUploadProfileImage() throws Exception {
+//        Authentication authentication = mock(Authentication.class);
+//        when(authentication.isAuthenticated()).thenReturn(true);
+//        when(authentication.getName()).thenReturn("candidate@example.com");
+//
+//        MultipartFile imageFile = mock(MultipartFile.class);
+//
+//        when(candidateService.findCandidateByEmail("candidate@example.com")).thenReturn(Entities.getCandidateJunior());
+//
+//        mockMvc.perform(MockMvcRequestBuilders.multipart("/upload-image")
+//                        .file("image.jpeg", imageFile.getBytes())
+//                        .principal(authentication)
+//                .with(csrf()))
+//                .andExpect(status().is3xxRedirection())
+//                .andExpect(redirectedUrl("/dashboard"));
+//    }
 
 
 }

@@ -5,6 +5,7 @@ CREATE TABLE company (
                          city VARCHAR(128),
                          email VARCHAR(128) NOT NULL,
                          description VARCHAR(1000),
+                         is_hiring BOOLEAN,
                          unique (company_name),
                          PRIMARY KEY (company_id)
 );

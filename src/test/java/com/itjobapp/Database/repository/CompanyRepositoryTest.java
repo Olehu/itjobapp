@@ -2,10 +2,13 @@ package com.itjobapp.Database.repository;
 
 import com.itjobapp.Service.domain.Company;
 import com.itjobapp.Util.Entities;
+import com.itjobapp.configuration.PersistenceContainerTestConfiguration;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,6 +16,8 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Import(PersistenceContainerTestConfiguration.class)
 public class CompanyRepositoryTest {
     @Autowired
     private CompanyRepository companyRepository;
