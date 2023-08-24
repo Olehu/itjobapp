@@ -33,8 +33,6 @@ public class SpringDocConfiguration {
 
     private Contact contact() {
         return new Contact()
-                .name("Zajavka")
-                .url("https://zajavka.pl")
-                .email("kontakt@zajavka.pl");
+                .name("ItJobApp");
     }
 }
