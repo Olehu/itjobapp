@@ -2,13 +2,12 @@ package com.itjobapp.Controller.web;
 
 import com.itjobapp.Controller.dto.CompanyDTO;
 import com.itjobapp.Controller.dto.JobOfferDTO;
-import com.itjobapp.Controller.dto.mapper.CandidateMapper;
 import com.itjobapp.Controller.dto.mapper.CompanyMapper;
 import com.itjobapp.Controller.dto.mapper.JobOfferMapper;
 import com.itjobapp.Security.UserService;
 import com.itjobapp.Service.CompanyService;
 import com.itjobapp.Service.JobOfferService;
-import com.itjobapp.Service.domain.Candidate;
+import com.itjobapp.Service.SkillsServiceController;
 import com.itjobapp.Service.domain.Company;
 import com.itjobapp.Service.domain.JobOffer;
 import lombok.AllArgsConstructor;
@@ -76,7 +75,7 @@ public class CompanyDashboardController {
             String email = authentication.getName();
             if (email.equals(jobOfferService.getJobOfferByName(name).getCompany().getEmail())) {
                 JobOfferDTO jobOfferDTO = jobOfferMapper.map(jobOfferService.getJobOfferByName(name));
-                model.addAttribute("allSkills", ServiceController.getAllSkillsAsSkillSet());
+                model.addAttribute("allSkills", SkillsServiceController.getAllSkillsAsSkillSet());
                 model.addAttribute("jobOfferDTO", jobOfferDTO);
                 return "dashboard-company-edit-joboffer";
             }

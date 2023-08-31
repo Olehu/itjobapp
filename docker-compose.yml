@@ -1,4 +1,4 @@
-version: '3.1'
+version: '3'
 services:
   backend:
     build: .
@@ -14,6 +14,7 @@ services:
     depends_on:
       PostgreSQL:
         condition: service_healthy
+
   PostgreSQL:
     image: postgres:15.0
     ports:
@@ -22,8 +23,6 @@ services:
       - POSTGRES_DB=job_app
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-    volumes:
-      - db-data:/var/lib/postgresql/data
     networks:
       - spring-boot-postgres
     healthcheck:

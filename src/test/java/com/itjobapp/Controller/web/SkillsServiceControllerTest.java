@@ -4,15 +4,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
 
+import com.itjobapp.Service.SkillsServiceController;
 import org.junit.jupiter.api.Test;
 
-class ServiceControllerTest {
+class SkillsServiceControllerTest {
     /**
-     * Method under test: {@link ServiceController#getAllSkillsAsString()}
+     * Method under test: {@link SkillsServiceController#getAllSkillsAsString()}
      */
     @Test
     void testGetAllSkillsAsString() {
-        List<String> actualAllSkillsAsString = ServiceController.getAllSkillsAsString();
+        List<String> actualAllSkillsAsString = SkillsServiceController.getAllSkillsAsString();
         assertEquals(18, actualAllSkillsAsString.size());
         assertEquals("Java", actualAllSkillsAsString.get(0));
         assertEquals("Python", actualAllSkillsAsString.get(1));
@@ -29,11 +30,11 @@ class ServiceControllerTest {
     }
 
     /**
-     * Method under test: {@link ServiceController#getAllSkillsAsSkillSet()}
+     * Method under test: {@link SkillsServiceController#getAllSkillsAsSkillSet()}
      */
     @Test
     void testGetAllSkillsAsSkillSet() {
-        assertEquals(18, ServiceController.getAllSkillsAsSkillSet().size());
+        assertEquals(18, SkillsServiceController.getAllSkillsAsSkillSet().size());
     }
 }
 

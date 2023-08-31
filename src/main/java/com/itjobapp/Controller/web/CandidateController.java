@@ -4,22 +4,18 @@ import com.itjobapp.Controller.dto.CandidateDTO;
 import com.itjobapp.Controller.dto.mapper.CandidateMapper;
 import com.itjobapp.Security.UserService;
 import com.itjobapp.Service.CandidateService;
-import com.itjobapp.Service.CompanyService;
-import com.itjobapp.Service.SkillList;
+import com.itjobapp.Service.SkillsServiceController;
 import com.itjobapp.Service.domain.Candidate;
-import com.itjobapp.Service.domain.Company;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -48,14 +44,14 @@ public class CandidateController {
         }
 
         model.addAttribute("candidates", candidates);
-        model.addAttribute("allSkills", ServiceController.getAllSkillsAsSkillSet());
+        model.addAttribute("allSkills", SkillsServiceController.getAllSkillsAsSkillSet());
         return "candidate";
     }
 
 
     @GetMapping(value = "/candidate/new")
     public String showCandidateForm(Model model) {
-        model.addAttribute("allSkills", ServiceController.getAllSkillsAsSkillSet());
+        model.addAttribute("allSkills", SkillsServiceController.getAllSkillsAsSkillSet());
         model.addAttribute("candidate", new CandidateDTO());
         return "candidate-form";
     }

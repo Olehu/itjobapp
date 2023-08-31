@@ -5,6 +5,7 @@ import com.itjobapp.Controller.dto.mapper.CompanyMapper;
 import com.itjobapp.Controller.dto.mapper.JobOfferMapper;
 import com.itjobapp.Service.CompanyService;
 import com.itjobapp.Service.JobOfferService;
+import com.itjobapp.Service.SkillsServiceController;
 import com.itjobapp.Service.domain.Company;
 import com.itjobapp.Util.Entities;
 import com.itjobapp.configuration.PersistenceContainerTestConfiguration;
@@ -68,7 +69,7 @@ JobOfferDTO jobOfferDTO = new JobOfferDTO().withCompany(Entities.getCompanyDTOAB
         mockMvc.perform(MockMvcRequestBuilders.get("/joboffer/new/" + company.getCompanyName()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("joboffer-form"))
-                .andExpect(model().attribute("allSkills", ServiceController.getAllSkillsAsSkillSet()))
+                .andExpect(model().attribute("allSkills", SkillsServiceController.getAllSkillsAsSkillSet()))
                 .andExpect(model().attribute("jobOffer", jobOfferDTO));
     }
 

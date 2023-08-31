@@ -2,16 +2,15 @@ package com.itjobapp.Controller.web;
 
 import com.itjobapp.Controller.dto.CandidateDTO;
 import com.itjobapp.Controller.dto.CompanyDTO;
-import com.itjobapp.Controller.web.DashboardController;
 import com.itjobapp.Service.CandidateService;
 import com.itjobapp.Service.CompanyService;
 import com.itjobapp.Security.UserService;
 import com.itjobapp.Controller.dto.mapper.CandidateMapper;
 import com.itjobapp.Controller.dto.mapper.CompanyMapper;
+import com.itjobapp.Service.SkillsServiceController;
 import com.itjobapp.Service.domain.Candidate;
 import com.itjobapp.Service.domain.Company;
 import com.itjobapp.Util.Entities;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,7 +72,7 @@ public class DashboardControllerTest {
                         .principal(authentication))
                 .andExpect(status().isOk())
                 .andExpect(view().name("dashboard-candidate-edit-profile"))
-                .andExpect(model().attribute("allSkills", ServiceController.getAllSkillsAsSkillSet()))
+                .andExpect(model().attribute("allSkills", SkillsServiceController.getAllSkillsAsSkillSet()))
                 .andExpect(model().attribute("candidate", candidateDTO));
     }
 

@@ -5,6 +5,7 @@ import com.itjobapp.Controller.dto.mapper.CompanyMapper;
 import com.itjobapp.Controller.dto.mapper.JobOfferMapper;
 import com.itjobapp.Service.CompanyService;
 import com.itjobapp.Service.JobOfferService;
+import com.itjobapp.Service.SkillsServiceController;
 import com.itjobapp.Service.domain.Company;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -51,7 +52,7 @@ public class JobOfferControler {
                     .map(jobOfferMapper::map)
                     .toList();
         }
-        model.addAttribute("allSkills", ServiceController.getAllSkillsAsSkillSet());
+        model.addAttribute("allSkills", SkillsServiceController.getAllSkillsAsSkillSet());
         model.addAttribute("jobOffers", jobOffers);
         return "joboffer";
     }
@@ -73,7 +74,7 @@ public class JobOfferControler {
 
         if (company != null) {
             JobOfferDTO jobOfferDTO = new JobOfferDTO().withCompany(companyMapper.map(company));
-            model.addAttribute("allSkills", ServiceController.getAllSkillsAsSkillSet());
+            model.addAttribute("allSkills", SkillsServiceController.getAllSkillsAsSkillSet());
             model.addAttribute("jobOffer", jobOfferDTO);
             return "joboffer-form";
         } else {

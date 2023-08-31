@@ -5,24 +5,17 @@ import com.itjobapp.Controller.dto.CompanyDTO;
 import com.itjobapp.Controller.dto.JobOfferDTO;
 import com.itjobapp.Controller.dto.mapper.CandidateMapper;
 import com.itjobapp.Controller.dto.mapper.CompanyMapper;
-import com.itjobapp.Database.repository.CandidateRepository;
-import com.itjobapp.Security.UserEntity;
-import com.itjobapp.Security.UserJpaRepository;
 import com.itjobapp.Security.UserService;
 import com.itjobapp.Service.CandidateService;
 import com.itjobapp.Service.CompanyService;
-import com.itjobapp.Service.SkillList;
-import com.itjobapp.Service.domain.Skills;
+import com.itjobapp.Service.SkillsServiceController;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 
 @Controller
@@ -71,7 +64,7 @@ public class DashboardController {
             String role = userService.findRoleByMail(email);
             if(role.equals("CANDIDATE")) {
                 CandidateDTO candidate = candidateMapper.map(candidateService.findCandidateByEmail(email));
-                model.addAttribute("allSkills", ServiceController.getAllSkillsAsSkillSet());
+                model.addAttribute("allSkills", SkillsServiceController.getAllSkillsAsSkillSet());
                 model.addAttribute("candidate", candidate);
                 return "dashboard-candidate-edit-profile";
             } else if(role.equals("COMPANY")) {

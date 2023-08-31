@@ -1,6 +1,5 @@
-package com.itjobapp.Controller.web;
+package com.itjobapp.Service;
 
-import com.itjobapp.Service.SkillList;
 import com.itjobapp.Service.domain.Skills;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +8,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-public class ServiceController {
+public class SkillsServiceController {
 
 
     public static List<String> getAllSkillsAsString() {
