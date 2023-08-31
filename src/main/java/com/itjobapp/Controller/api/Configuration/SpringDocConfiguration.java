@@ -26,15 +26,13 @@ public class SpringDocConfiguration {
         return new OpenAPI()
                 .components(new Components())
                 .info(new Info()
-                        .title("Car dealership application")
+                        .title("It jobapp Application")
                         .contact(contact())
                         .version("1.0"));
     }
 
     private Contact contact() {
         return new Contact()
-                .name("Zajavka")
-                .url("https://zajavka.pl")
-                .email("kontakt@zajavka.pl");
+                .name("ItJobApp");
     }
 }
